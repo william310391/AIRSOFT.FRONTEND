@@ -1,0 +1,9 @@
+<img
+  src="{{ authService.datosUsuario()?.usuarioUrlImagen }}"
+  class="rounded-circle mb-2"
+  alt="Usuario"
+  width="80"
+  height="80"
+/>
+<h6 class="mb-0">{{ authService.datosUsuario()?.usuarioNombre }}</h6>
+<small class="text-secondary">{{ authService.datosUsuario()?.usuarioRol }}</small>

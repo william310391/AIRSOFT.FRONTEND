@@ -1,0 +1,56 @@
+<div class="offcanvas-header">
+  <h5 class="offcanvas-title">Menú</h5>
+  <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+</div>
+<div class="offcanvas-body d-flex flex-column">
+  <!-- Datos de usuario en móvil -->
+  <div class="text-center mb-4">
+    <app-datos-usuario />
+
+    <!-- Botón cerrar sesión debajo del usuario -->
+    <div class="mt-3">
+      <a href="#" class="btn btn-danger btn-sm w-100" (click)="authService.cerrarSesion()"
+        >🚪 Cerrar sesión</a
+      >
+    </div>
+
+    <hr class="border-secondary" />
+  </div>
+
+  <ul class="nav flex-column flex-grow-1">
+    <li class="nav-item"><a href="#" class="nav-link text-white">🏠 Inicio</a></li>
+
+    <!-- Submenú en móviles -->
+    <li class="nav-item">
+      <a
+        class="nav-link text-white"
+        data-bs-toggle="collapse"
+        href="#submenuReportesMobile"
+        role="button"
+      >
+        📊 Reportes
+      </a>
+      <div class="collapse ps-3" id="submenuReportesMobile">
+        <a href="#" class="nav-link text-white">• Ventas</a>
+        <a href="#" class="nav-link text-white">• Usuarios</a>
+        <a href="#" class="nav-link text-white">• Actividad</a>
+      </div>
+    </li>
+
+    <li class="nav-item">
+      <a
+        class="nav-link text-white"
+        data-bs-toggle="collapse"
+        href="#submenuConfigMobile"
+        role="button"
+      >
+        ⚙️ Configuración
+      </a>
+      <div class="collapse ps-3" id="submenuConfigMobile">
+        <a href="#" class="nav-link text-white">• Perfil</a>
+        <a href="#" class="nav-link text-white">• Seguridad</a>
+        <a href="#" class="nav-link text-white">• Preferencias</a>
+      </div>
+    </li>
+  </ul>
+</div>

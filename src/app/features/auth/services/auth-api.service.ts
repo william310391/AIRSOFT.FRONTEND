@@ -20,9 +20,9 @@ export class AuthApiService {
       .post<ApiResponse<LoginResponse>>(`${this.urlServicio}/login`, loginRequest)
       .pipe(
         tap((res) => {
-          console.log(res);
           if (res.success && res.data?.token) {
             JwtHelper.setToken(res.data.token);
+            console.log(JwtHelper.getClaimsAll());
           }
         })
       );

@@ -1,6 +1,6 @@
 export interface JwtClaims {
   usuarioNombre: string;
-  usuarioID: string;
+  usuarioID: number;
   usuarioRol: string;
   usuarioUrlImagen: string;
   listaMenu: MenuPaginaResponse[];

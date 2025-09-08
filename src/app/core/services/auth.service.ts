@@ -1,4 +1,4 @@
-import { Injectable, signal } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { JwtClaims } from '../interfaces/JwtClaims.interface';
 import { JwtHelper } from '../utils/JwtHelper';

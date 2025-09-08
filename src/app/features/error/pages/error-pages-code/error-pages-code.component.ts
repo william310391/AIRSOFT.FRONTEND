@@ -12,7 +12,6 @@ import { HttpStatus } from '../../constants/HTTP_STATUS_CODES';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class ErrorPagesCodeComponent {
-  private route = inject(ActivatedRoute);
   httpStatus = signal<HttpStatus | null>(null);
   codeError = toSignal(inject(ActivatedRoute).params.pipe(map((params) => params['codeError'])));
   errorService = inject(ErrorService);

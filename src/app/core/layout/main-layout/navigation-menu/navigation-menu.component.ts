@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
-  selector: 'app-navbar-menu',
+  selector: 'app-navigation-menu',
   imports: [],
-  templateUrl: './navbar-menu.component.html',
+  templateUrl: './navigation-menu.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NavbarMenuComponent { }
+export default class NavigationMenuComponent {}

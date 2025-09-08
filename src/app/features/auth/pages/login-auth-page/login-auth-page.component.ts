@@ -1,7 +1,8 @@
 import { Component, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthApiService } from '../../services/auth-api.service';
-import { LoginRequest } from 'src/app/core/models/auth/login-request';
+
+import { LoginRequest } from 'src/app/core/models/auth/request/login-request';
+import { AuthApiService } from 'src/app/core/services/auth-api.service';
 
 @Component({
   selector: 'app-login-auth-page',

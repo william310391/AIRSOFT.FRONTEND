@@ -9,8 +9,7 @@ export const routes: Routes = [
 
   {
     path: '',
-    loadComponent: () =>
-      import('./features/dashboard/pages/dashboard-page/dashboard-page.component'),
+    loadComponent: () => import('./core/layout/main-layout/main-layout.component'),
     canActivate: [authGuard],
     children: [
       {

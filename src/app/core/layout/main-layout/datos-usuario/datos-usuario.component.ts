@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { AuthService } from 'src/app/core/services/auth.service';
+import { AuthService } from 'src/app/core/layout/services/layout.service';
 
 @Component({
   selector: 'app-datos-usuario',
@@ -7,6 +7,6 @@ import { AuthService } from 'src/app/core/services/auth.service';
   templateUrl: './datos-usuario.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DatosUsuarioComponent {
+export default class DatosUsuarioComponent {
   authService = inject(AuthService);
 }

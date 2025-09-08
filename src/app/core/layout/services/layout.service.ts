@@ -1,7 +1,7 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { JwtClaims } from '../interfaces/JwtClaims.interface';
-import { JwtHelper } from '../utils/JwtHelper';
+import { JwtClaims } from '../../interfaces/JwtClaims.interface';
+import { JwtHelper } from '../../utils/JwtHelper';
 
 @Injectable({
   providedIn: 'root',

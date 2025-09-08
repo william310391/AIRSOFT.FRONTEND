@@ -19,7 +19,13 @@ export const routes: Routes = [
     ],
   },
   {
+    path: 'unauthorized/:codeError',
+    loadComponent: () =>
+      import('./features/error/pages/error-pages-code/error-pages-code.component'),
+  },
+
+  {
     path: '**',
-    redirectTo: 'login',
+    redirectTo: 'unauthorized/404',
   },
 ];

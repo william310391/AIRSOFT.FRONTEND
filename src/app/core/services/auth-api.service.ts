@@ -22,7 +22,7 @@ export class AuthApiService {
         tap((res) => {
           if (res.success && res.data?.token) {
             JwtHelper.setToken(res.data.token);
-            console.log(JwtHelper.getClaimsAll());
+            // console.log(JwtHelper.getClaimsAll());
           }
         })
       );

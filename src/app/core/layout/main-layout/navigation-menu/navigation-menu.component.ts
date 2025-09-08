@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { LayoutService } from '../../services/layout.service';
 
 @Component({
   selector: 'app-navigation-menu',
@@ -6,4 +7,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   templateUrl: './navigation-menu.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export default class NavigationMenuComponent {}
+export default class NavigationMenuComponent {
+  servicio = inject(LayoutService);
+}

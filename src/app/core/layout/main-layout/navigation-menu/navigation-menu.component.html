@@ -1,31 +1,18 @@
-<li class="nav-item">
-  <a
-    class="nav-link text-white"
-    data-bs-toggle="collapse"
-    href="#submenuReportesMobile"
-    role="button"
-  >
-    📊 Reportes
-  </a>
-  <div class="collapse show ps-3" id="submenuReportesMobile">
-    <a href="#" class="nav-link text-white">• Ventas</a>
-    <a href="#" class="nav-link text-white">• Usuarios</a>
-    <a href="#" class="nav-link text-white">• Actividad</a>
-  </div>
-</li>
+@for (menu of servicio.menus(); track $index) {
 
 <li class="nav-item">
   <a
     class="nav-link text-white"
     data-bs-toggle="collapse"
-    href="#submenuConfigMobile"
+    href="#{{ menu.menuNombre }}"
     role="button"
   >
-    ⚙️ Configuración
+    📊 {{ menu.menuNombre }}
   </a>
-  <div class="collapse show ps-3" id="submenuConfigMobile">
-    <a href="#" class="nav-link text-white">• Perfil</a>
-    <a href="#" class="nav-link text-white">• Seguridad</a>
-    <a href="#" class="nav-link text-white">• Preferencias</a>
+  <div class="collapse show ps-3" [id]="menu.menuNombre">
+    @for (pagina of menu.paginas; track $index) {
+    <a href="#" class="nav-link text-white">• {{ pagina.paginaNombre }}</a>
+    }
   </div>
 </li>
+}

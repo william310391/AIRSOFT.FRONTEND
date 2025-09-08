@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { AuthService } from 'src/app/core/layout/services/layout.service';
+import { LayoutService } from 'src/app/core/layout/services/layout.service';
 import DatosUsuarioComponent from '../datos-usuario/datos-usuario.component';
 import NavigationMenuComponent from '../navigation-menu/navigation-menu.component';
 
@@ -10,5 +10,5 @@ import NavigationMenuComponent from '../navigation-menu/navigation-menu.componen
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class NavbarMovilComponent {
-  authService = inject(AuthService);
+  authService = inject(LayoutService);
 }

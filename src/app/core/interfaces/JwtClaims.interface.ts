@@ -3,7 +3,7 @@ export interface JwtClaims {
   usuarioID: number;
   usuarioRol: string;
   usuarioUrlImagen: string;
-  listaMenu: MenuPaginaResponse[];
+  // listaMenu: MenuPaginaResponse[];
   exp: number;
   iss: string;
   aud: string;

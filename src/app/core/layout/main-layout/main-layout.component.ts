@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { AuthService } from '../services/layout.service';
+import { LayoutService } from '../services/layout.service';
 import { UsuarioApiService } from '../../services/usuario-api.service';
 import { ObtenerAccesosResponse } from '../../models/usuario/response/obtenerAccesos-response';
 import { ObtenerAccesosRequest } from '../../models/usuario/request/obtenerAccesos-request';
@@ -13,7 +13,7 @@ import NavbarDeskComponent from './navbar-desk/navbar-desk.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class MainLayoutComponent {
-  authService = inject(AuthService);
+  authService = inject(LayoutService);
   usuarioApiService = inject(UsuarioApiService);
 
   datosUsuarios = signal<ObtenerAccesosResponse | null>(null);

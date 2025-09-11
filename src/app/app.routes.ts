@@ -16,6 +16,20 @@ export const routes: Routes = [
         path: 'prueba',
         loadComponent: () => import('./features/prueba/pages/prueba-page/prueba-page.component'),
       },
+      {
+        path: 'administracion/usuarios',
+        loadComponent: () =>
+          import(
+            './features/administracion/pages/administracion-pages-usuarios/administracion-pages-usuarios.component'
+          ),
+      },
+      {
+        path: 'reporte/usuarios_registrados',
+        loadComponent: () =>
+          import(
+            './features/reportes/pages/reportes-pages-usuarios-registrados/reportes-pages-usuarios-registrados.component'
+          ),
+      },
     ],
   },
   {

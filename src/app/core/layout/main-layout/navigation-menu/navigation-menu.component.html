@@ -4,14 +4,23 @@
   <a
     class="nav-link text-white"
     data-bs-toggle="collapse"
-    href="#{{ menu.menuNombre }}"
+    [attr.href]="'#' + menu.menuNombre"
     role="button"
+    routerLinkActive="text-info fw-bold"
   >
     📊 {{ menu.menuNombre }}
   </a>
   <div class="collapse show ps-3" [id]="menu.menuNombre">
     @for (pagina of menu.paginas; track $index) {
-    <a href="#" class="nav-link text-white">• {{ pagina.paginaNombre }}</a>
+    <a
+      [routerLink]="[pagina.paginaUrlLink]"
+      class="nav-link"
+      [class.text-white]="true"
+      routerLinkActive="text-dark-emphasis"
+      [routerLinkActiveOptions]="{ exact: false }"
+    >
+      {{ pagina.paginaNombre }}
+    </a>
     }
   </div>
 </li>

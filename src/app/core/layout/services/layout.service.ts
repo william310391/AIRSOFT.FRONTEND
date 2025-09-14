@@ -35,7 +35,6 @@ export class LayoutService {
           paginaIcono: item.paginaIcono,
           paginaUrlLink: item.paginaUrlLink,
         });
-        console.log(acc);
         return acc;
       }, {} as Record<string, Menu>)
     );

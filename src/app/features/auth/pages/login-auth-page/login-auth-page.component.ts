@@ -1,8 +1,8 @@
 import { Component, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
-
 import { LoginRequest } from 'src/app/core/models/auth/request/login-request';
 import { AuthApiService } from 'src/app/core/services/auth-api.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-login-auth-page',
@@ -11,6 +11,7 @@ import { AuthApiService } from 'src/app/core/services/auth-api.service';
 export default class LoginAuthPageComponent {
   constructor(private router: Router) {}
   apiServicio = inject(AuthApiService);
+  authServicio = inject(AuthService);
 
   usuarioNombre = signal<string>('');
   password = signal<string>('');
@@ -26,13 +27,17 @@ export default class LoginAuthPageComponent {
     var datos = this.cargarDatos();
     this.apiServicio.login(datos).subscribe({
       next: (res) => {
-        console.log('Login exitoso', res);
+        this.authServicio.ObtenerPermisos({
+          usuarioID: res.data?.usuarioId ?? 0,
+        });
+
+        // console.log('Login exitoso', res);
         this.router.navigate(['/prueba']);
       },
       error: (err) => {
         this.isError.set(true);
         this.messageError.set(err.error.Message);
-        console.error('Error en login', err, err.error.Message);
+        // console.error('Error en login', err, err.error.Message);
       },
     });
     this.isLoading.set(false);

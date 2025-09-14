@@ -1,15 +1,15 @@
 import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HTTP_STATUS_CODES, HttpStatus } from '../constants/HTTP_STATUS_CODES';
-import { LayoutService } from 'src/app/core/layout/services/layout.service';
 import { JwtHelper } from 'src/app/core/utils/JwtHelper';
+import { AuthService } from '../../auth/pages/services/auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ErrorService {
   constructor(private router: Router) {}
-  layoutService = inject(LayoutService);
+  authService = inject(AuthService);
   getStatus(code: number | string): HttpStatus {
     if (Number(code) == 401) {
       JwtHelper.removeToken();
@@ -25,7 +25,7 @@ export class ErrorService {
 
   volver(codeError: number | null) {
     if (codeError == 401 || codeError == null) {
-      this.layoutService.cerrarSesion();
+      this.authService.cerrarSesion();
     } else {
       this.router.navigate(['/prueba']);
     }

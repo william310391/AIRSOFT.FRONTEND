@@ -7,39 +7,39 @@ export const routes: Routes = [
     loadComponent: () => import('./features/auth/pages/login-auth-page/login-auth-page.component'),
   },
 
+  // {
+  //   path: '',
+  //   loadComponent: () => import('./core/layout/main-layout/main-layout.component'),
+  //   canActivate: [authGuard],
+  //   children: [
+  //     {
+  //       path: 'prueba',
+  //       loadComponent: () => import('./features/prueba/pages/prueba-page/prueba-page.component'),
+  //     },
+  //     {
+  //       path: 'administracion/usuarios',
+  //       loadComponent: () =>
+  //         import(
+  //           './features/administracion/pages/administracion-pages-usuarios/administracion-pages-usuarios.component'
+  //         ),
+  //     },
+  //     {
+  //       path: 'reporte/usuarios_registrados',
+  //       loadComponent: () =>
+  //         import(
+  //           './features/reportes/pages/reportes-pages-usuarios-registrados/reportes-pages-usuarios-registrados.component'
+  //         ),
+  //     },
+  //   ],
+  // },
   {
-    path: '',
-    loadComponent: () => import('./core/layout/main-layout/main-layout.component'),
-    canActivate: [authGuard],
-    children: [
-      {
-        path: 'prueba',
-        loadComponent: () => import('./features/prueba/pages/prueba-page/prueba-page.component'),
-      },
-      {
-        path: 'administracion/usuarios',
-        loadComponent: () =>
-          import(
-            './features/administracion/pages/administracion-pages-usuarios/administracion-pages-usuarios.component'
-          ),
-      },
-      {
-        path: 'reporte/usuarios_registrados',
-        loadComponent: () =>
-          import(
-            './features/reportes/pages/reportes-pages-usuarios-registrados/reportes-pages-usuarios-registrados.component'
-          ),
-      },
-    ],
-  },
-  {
-    path: 'unauthorized/:codeError',
+    path: 'error/:codeError',
     loadComponent: () =>
       import('./features/error/pages/error-pages-code/error-pages-code.component'),
   },
 
   {
     path: '**',
-    redirectTo: 'unauthorized/404',
+    redirectTo: 'error/401',
   },
 ];

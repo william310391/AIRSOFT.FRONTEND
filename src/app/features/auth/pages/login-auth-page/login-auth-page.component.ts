@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { LoginRequest } from 'src/app/core/models/auth/request/login-request';
 import { AuthApiService } from 'src/app/core/services/auth-api.service';
 import { AuthService } from '../services/auth.service';
+import { buildRoutes } from 'src/app/core/router/buildRoutes';
 
 @Component({
   selector: 'app-login-auth-page',
@@ -30,8 +31,13 @@ export default class LoginAuthPageComponent {
         this.authServicio.ObtenerPermisos({
           usuarioID: res.data?.usuarioId ?? 0,
         });
-
-        // console.log('Login exitoso', res);
+        // 1. Guardar los permisos en el servicio
+        this.authServicio.setPermisos(this.authServicio.acceso());
+        // 2. Construir rutas dinámicas
+        const rutas = buildRoutes(this.authServicio.acceso()?.listaPagina ?? []);
+        // 3. Inyectar las rutas en el Router
+        this.router.resetConfig(rutas);
+        // 4. Navegar a la página principal o dashboard
         this.router.navigate(['/prueba']);
       },
       error: (err) => {

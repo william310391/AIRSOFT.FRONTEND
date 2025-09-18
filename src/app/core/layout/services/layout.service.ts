@@ -12,14 +12,13 @@ export class LayoutService {
   datosUsuario = signal<JwtClaims | null>(JwtHelper.getClaimsAll());
   authServicio = inject(AuthService);
   constructor(private router: Router) {
-    if (this.datosUsuario() == null) {
-      this.router.navigate(['/login']);
-    }
+    // if (this.datosUsuario() == null) {
+    //   this.router.navigate(['/login']);
+    // }
   }
   menus = computed<Menu[]>(() => {
     const datos = this.authServicio.acceso()?.listaPagina;
     if (!datos) return []; // manejamos el caso null ✅
-
     return Object.values(
       datos.reduce((acc, item) => {
         if (!acc[item.menuNombre]) {

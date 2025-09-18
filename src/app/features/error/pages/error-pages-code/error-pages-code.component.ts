@@ -18,7 +18,7 @@ export default class ErrorPagesCodeComponent {
 
   constructor() {
     this.httpStatus.set(
-      this.errorService.getStatus(this.codeError() == null ? 404 : this.codeError())
+      this.errorService.getStatus(this.codeError() == null ? 401 : this.codeError())
     );
   }
 }

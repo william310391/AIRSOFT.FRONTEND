@@ -5,4 +5,5 @@ export interface MenuPaginaResponse {
   paginaNombre: string;
   paginaIcono: string;
   paginaUrlLink: string;
+  rutaComponente: string;
 }

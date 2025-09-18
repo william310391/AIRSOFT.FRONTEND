@@ -3,7 +3,10 @@
   <app-datos-usuario />
   <!-- Botón cerrar sesión debajo del usuario -->
   <div class="mt-3">
-    <a href="#" class="btn btn-danger btn-sm w-100" (click)="authService.cerrarSesion()"
+    <a
+      [routerLink]="['/login']"
+      class="btn btn-danger btn-sm w-100"
+      (click)="authService.cerrarSesion()"
       >🚪 Cerrar sesión</a
     >
   </div>
@@ -14,7 +17,7 @@
 <!-- Menú -->
 <ul class="nav flex-column flex-grow-1">
   <li class="nav-item">
-    <a href="#" class="nav-link text-white">🏠 Inicio</a>
+    <a [routerLink]="['/prueba']" class="nav-link text-white">🏠 Inicio</a>
   </li>
 
   <!-- Submenú Reportes -->

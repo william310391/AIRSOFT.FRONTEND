@@ -6,21 +6,8 @@ import { Modal } from 'bootstrap';
   selector: 'app-root',
   imports: [RouterOutlet],
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrl: './app.css',
 })
 export class App {
   protected readonly title = signal('angular-boostrap');
-
-
-
-
-  
-// openModal() {
-//     const modalEl = document.getElementById('exampleModal');
-//     if (modalEl) {
-//       const modal = new Modal(modalEl);
-//       modal.show();
-//     }
-//   }
-  
 }

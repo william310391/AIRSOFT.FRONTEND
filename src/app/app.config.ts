@@ -20,6 +20,12 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideHttpClient(withFetch(), withInterceptors([authInterceptor])),
     provideAppInitializer(() => {
+      // const currentPath = window.location.pathname;
+      // // Si estamos en / o /login no cargamos permisos
+      // if (currentPath === '/' || currentPath.startsWith('/login')) {
+      //   return Promise.resolve();
+      // }
+
       const authService = inject(AuthService);
       const claims = authService.datosUsuario();
       if (claims) {

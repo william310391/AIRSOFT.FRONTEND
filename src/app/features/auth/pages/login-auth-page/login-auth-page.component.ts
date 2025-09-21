@@ -4,6 +4,7 @@ import { LoginRequest } from 'src/app/core/models/auth/request/login-request';
 import { AuthApiService } from 'src/app/core/services/auth-api.service';
 import { AuthService } from '../services/auth.service';
 import { buildRoutes } from 'src/app/core/router/buildRoutes';
+import { JwtHelper } from 'src/app/core/utils/JwtHelper';
 
 @Component({
   selector: 'app-login-auth-page',
@@ -28,17 +29,20 @@ export default class LoginAuthPageComponent {
     var datos = this.cargarDatos();
     this.apiServicio.login(datos).subscribe({
       next: (res) => {
-        this.authServicio.ObtenerPermisos({
-          usuarioID: res.data?.usuarioId ?? 0,
-        });
-        // 1. Guardar los permisos en el servicio
-        this.authServicio.setPermisos(this.authServicio.acceso());
-        // 2. Construir rutas dinámicas
-        const rutas = buildRoutes(this.authServicio.acceso()?.listaPagina ?? []);
-        // 3. Inyectar las rutas en el Router
-        this.router.resetConfig(rutas);
-        // 4. Navegar a la página principal o dashboard
-        this.router.navigate(['/prueba']);
+        this.authServicio
+          .ObtenerPermisos({
+            usuarioID: res.data?.usuarioId ?? 0,
+          })
+          .subscribe((res) => {
+            // 1. Guardar los permisos en el servicio
+            this.authServicio.setPermisos(this.authServicio.acceso());
+            // 2. Construir rutas dinámicas
+            const rutas = buildRoutes(this.authServicio.acceso()?.listaPagina ?? []);
+            // 3. Inyectar las rutas en el Router
+            this.router.resetConfig(rutas);
+            // 4. Navegar a la página principal o dashboard
+            this.router.navigate(['/prueba']);
+          });
       },
       error: (err) => {
         this.isError.set(true);

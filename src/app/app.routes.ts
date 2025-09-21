@@ -6,6 +6,10 @@ export const routes: Routes = [
     path: 'login',
     loadComponent: () => import('./features/auth/pages/login-auth-page/login-auth-page.component'),
   },
+  {
+    path: '',
+    loadComponent: () => import('./features/auth/pages/login-auth-page/login-auth-page.component'),
+  },
 
   // {
   //   path: '',

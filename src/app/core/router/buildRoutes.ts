@@ -29,6 +29,11 @@ export function buildRoutes(menuPaginaResponse: MenuPaginaResponse[]): Routes {
     },
     {
       path: '',
+      loadComponent: () =>
+        import('../../features/auth/pages/login-auth-page/login-auth-page.component'),
+    },
+    {
+      path: '',
       loadComponent: () => import('../../core/layout/main-layout/main-layout.component'),
       canActivate: [authGuard],
       children: [

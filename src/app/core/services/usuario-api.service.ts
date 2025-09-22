@@ -5,6 +5,9 @@ import { ObtenerAccesosRequest } from 'src/app/core/models/usuario/request/obten
 import { ObtenerAccesosResponse } from 'src/app/core/models/usuario/response/obtenerAccesos-response';
 import { ApiResponse } from 'src/app/core/models/api-response';
 import { map } from 'rxjs';
+import { FindRequest } from '../models/usuario/request/find-request';
+import { UsuarioResponse } from '../models/usuario/response/usuario-response';
+import { FindResponse } from '../models/usuario/response/find-response';
 
 @Injectable({
   providedIn: 'root',
@@ -20,5 +23,14 @@ export class UsuarioApiService {
       .pipe(
         map((res) => (res.success ? res.data : null)) // ✅ devuelve ObtenerAccesosResponse
       );
+  }
+
+  GetUsuarioFind(request: FindRequest) {
+    return this.http
+      .post<ApiResponse<FindResponse<UsuarioResponse>>>(
+        `${this.urlServicio}/getUsuarioFind`,
+        request
+      )
+      .pipe(map((res) => (res.success ? res.data : null)));
   }
 }

@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { BuscarUsuariosComponent } from '../../components/buscarUsuarios/buscarUsuarios.component';
 
 @Component({
   selector: 'app-administracion-pages-usuarios',
-  imports: [],
+  imports: [BuscarUsuariosComponent],
   templateUrl: './administracion-pages-usuarios.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

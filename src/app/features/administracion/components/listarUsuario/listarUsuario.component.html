@@ -1,0 +1,26 @@
+<div class="container">
+  <div class="table-responsive">
+    <table class="table table-sm table-hover border-dark mt-4">
+      <thead class="table-light">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Nombre Usuario</th>
+          <th scope="col">rolID</th>
+          <th scope="col">rolNombre</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          @if(datos().datos.length === 0) {
+          <td colspan="4" class="text-center">No hay datos disponibles</td>
+          } @else { @for (item of datos().datos; track $index) {
+          <td>{{ item.usuarioID }}</td>
+          <td>{{ item.usuarioNombre }}</td>
+          <td>{{ item.rolID }}</td>
+          <td>{{ item.rolNombre }}</td>
+          }}
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

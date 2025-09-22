@@ -4,6 +4,7 @@ import { FindRequest } from 'src/app/core/models/usuario/request/find-request';
 import { UsuariosService } from '../../servicies/usuarios.service';
 import { UsuarioResponse } from 'src/app/core/models/usuario/response/usuario-response';
 import { FindResponse } from 'src/app/core/models/usuario/response/find-response';
+import { SharedService } from 'src/app/shared/services/shared.service';
 
 @Component({
   selector: 'app-buscar-usuarios',
@@ -12,7 +13,9 @@ import { FindResponse } from 'src/app/core/models/usuario/response/find-response
 })
 export class BuscarUsuariosComponent {
   buscar = signal<string>('');
+  cargando = signal<boolean>(false); // 👈 nuevo
   usuarioService = inject(UsuariosService);
+  sharedService = inject(SharedService);
   // Inicializa con un estado vacío en lugar de null
   ListaUsuarios = signal<FindResponse<UsuarioResponse>>({
     datos: [],
@@ -25,11 +28,20 @@ export class BuscarUsuariosComponent {
   });
 
   buscarUsuarios() {
+    this.sharedService.isLandingPage.set(true);
+    this.cargando.set(true); // 👈 comienza la carga
     const request = this.cargarDatos();
-    this.usuarioService.getUsuarioFind(request).subscribe((res) => {
-      if (res) {
-        this.ListaUsuarios.set(res);
-      }
+
+    this.usuarioService.getUsuarioFind(request).subscribe({
+      next: (res) => {
+        if (res) {
+          this.ListaUsuarios.set(res);
+        }
+        this.sharedService.isLandingPage.set(false); // 👈 termina la carga
+      },
+      error: () => {
+        this.sharedService.isLandingPage.set(false); // 👈 termina la carga incluso si hay error
+      },
     });
   }
 

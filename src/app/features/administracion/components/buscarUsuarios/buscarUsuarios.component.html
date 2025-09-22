@@ -1,9 +1,8 @@
 <div class="card">
   <div class="card-header"><b>Buscar Usuarios</b></div>
   <div class="card-body">
-    <div class="row row-cols-lg-auto g-3 align-items-center">
-      <div class="col-12">
-        <label class="visually-hidden" for="inlineFormInputGroupUsername">Username</label>
+    <div class="row g-3 align-items-center">
+      <div class="col-12 col-sm-6 col-md-6">
         <div class="input-group">
           <input
             type="text"
@@ -13,14 +12,14 @@
             (input)="buscar.set(txtBuscar.value)"
             #txtBuscar
           />
+          <button class="btn btn-primary" type="button" (click)="buscarUsuarios()">
+            <i class="bi bi-search"></i> Buscar
+          </button>
         </div>
-      </div>
-      <div class="col-12">
-        <button type="submit" class="btn btn-primary" (click)="buscarUsuarios()">Buscar</button>
       </div>
     </div>
 
-    <div class="row">
+    <div class="row align-items-center">
       <app-listar-usuario [datos]="ListaUsuarios()" />
     </div>
   </div>

@@ -22,5 +22,13 @@
     <div class="row align-items-center">
       <app-listar-usuario [datos]="ListaUsuarios()" />
     </div>
+
+    <app-paginacion
+      [currentPage]="ListaUsuarios().pagina"
+      [totalPages]="ListaUsuarios().totalPaginas"
+      [hasPrev]="ListaUsuarios().tienePaginaAnterior"
+      [hasNext]="ListaUsuarios().tienePaginaSiguiente"
+      (pageChange)="onPageChange($event)"
+    />
   </div>
 </div>

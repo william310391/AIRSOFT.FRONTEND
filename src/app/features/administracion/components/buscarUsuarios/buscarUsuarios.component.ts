@@ -4,18 +4,22 @@ import { FindRequest } from 'src/app/core/models/usuario/request/find-request';
 import { UsuariosService } from '../../servicies/usuarios.service';
 import { UsuarioResponse } from 'src/app/core/models/usuario/response/usuario-response';
 import { FindResponse } from 'src/app/core/models/usuario/response/find-response';
-import { SharedService } from 'src/app/shared/services/shared.service';
+import { LoadingService } from 'src/app/shared/components/services/loading.service';
+import { PaginacionComponent } from '../../../../shared/components/paginacion/paginacion.component';
 
 @Component({
   selector: 'app-buscar-usuarios',
   templateUrl: './buscarUsuarios.component.html',
-  imports: [ListarUsuarioComponent],
+  imports: [ListarUsuarioComponent, PaginacionComponent],
 })
 export class BuscarUsuariosComponent {
   buscar = signal<string>('');
-  cargando = signal<boolean>(false); // 👈 nuevo
   usuarioService = inject(UsuariosService);
-  sharedService = inject(SharedService);
+  sharedService = inject(LoadingService);
+
+  currentPage = signal(1);
+  totalPages = signal(1);
+  pageSize = 10;
   // Inicializa con un estado vacío en lugar de null
   ListaUsuarios = signal<FindResponse<UsuarioResponse>>({
     datos: [],
@@ -28,13 +32,16 @@ export class BuscarUsuariosComponent {
   });
 
   buscarUsuarios() {
-    this.sharedService.isLandingPage.set(true);
-    this.cargando.set(true); // 👈 comienza la carga
+    this.sharedService.isLandingPage.set(true); //👈comienza la carga
     const request = this.cargarDatos();
 
     this.usuarioService.getUsuarioFind(request).subscribe({
       next: (res) => {
         if (res) {
+          // console.log(res);
+          this.currentPage.set(res.pagina);
+          this.totalPages.set(res.totalPaginas);
+          // Actualiza la señal con los nuevos datos
           this.ListaUsuarios.set(res);
         }
         this.sharedService.isLandingPage.set(false); // 👈 termina la carga
@@ -48,8 +55,15 @@ export class BuscarUsuariosComponent {
   cargarDatos(): FindRequest {
     return {
       buscar: this.buscar(),
-      pagina: 1,
-      tamanoPagina: 10,
+      pagina: this.currentPage(),
+      tamanoPagina: this.pageSize,
     };
+  }
+
+  onPageChange(page: number) {
+    if (page >= 1 && page <= this.totalPages()) {
+      this.currentPage.set(page);
+      this.buscarUsuarios();
+    }
   }
 }

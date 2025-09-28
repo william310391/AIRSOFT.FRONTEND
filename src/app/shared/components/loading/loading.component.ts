@@ -1,5 +1,5 @@
 import { Component, inject, Input } from '@angular/core';
-import { SharedService } from '../services/shared.service';
+import { LoadingService } from '../services/loading.service';
 
 @Component({
   selector: 'app-loading',
@@ -7,5 +7,5 @@ import { SharedService } from '../services/shared.service';
   styleUrls: ['./loading.component.css'],
 })
 export class LoadingComponent {
-  sharedService = inject(SharedService);
+  sharedService = inject(LoadingService);
 }

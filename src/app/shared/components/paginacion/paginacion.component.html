@@ -1,0 +1,25 @@
+<nav>
+  <ul class="pagination flex-wrap justify-content-end">
+    <!-- Botón anterior -->
+    <li class="page-item" [class.disabled]="!hasPrev">
+      <a class="page-link" href="#" (click)="changePage(currentPage - 1); $event.preventDefault()">
+        Anterior
+      </a>
+    </li>
+
+    @for (page of [].constructor(totalPages); track $index){
+    <li class="page-item" [class.active]="currentPage === $index + 1">
+      <a class="page-link" href="#" (click)="changePage($index + 1); $event.preventDefault()">
+        {{ $index + 1 }}
+      </a>
+    </li>
+    }
+
+    <!-- Botón siguiente -->
+    <li class="page-item" [class.disabled]="!hasNext">
+      <a class="page-link" href="#" (click)="changePage(currentPage + 1); $event.preventDefault()">
+        Siguiente
+      </a>
+    </li>
+  </ul>
+</nav>

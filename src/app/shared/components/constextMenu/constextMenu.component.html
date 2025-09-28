@@ -1,0 +1,39 @@
+@if (menuVisible()) {
+<ul
+  class="dropdown-menu show"
+  style="position: fixed"
+  [style.top.px]="menuY()"
+  [style.left.px]="menuX()"
+>
+  @for (action of actions(); track action.type) {
+  <li>
+    <a
+      class="dropdown-item cursor-pointer"
+      (click)="actionSelected.emit({ action, data: contextData() })"
+    >
+      @if (action.icon) { <i class="{{ action.icon }} me-2"></i> }
+      {{ action.label }}
+    </a>
+  </li>
+  }
+</ul>
+}
+<!-- @if (menuVisible()) {
+<ul
+  class="dropdown-menu show"
+  [style.top.px]="menuY()"
+  [style.left.px]="menuX()"
+  style="position: fixed"
+>
+  @for (action of actions(); track action.label) {
+  <li>
+    <a class="dropdown-item cursor-pointer" (click)="actionSelected.emit(action)">
+      @if (action.icon) {
+      <i class="{{ action.icon }}"></i>
+      }
+      {{ action.label }}
+    </a>
+  </li>
+  }
+</ul>
+} -->

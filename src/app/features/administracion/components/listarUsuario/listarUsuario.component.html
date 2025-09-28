@@ -4,21 +4,41 @@
       <tr>
         <th scope="col">#</th>
         <th scope="col">Nombre Usuario</th>
-        <th scope="col">rolID</th>
-        <th scope="col">rolNombre</th>
+        <th class="d-none d-md-table-cell" scope="col">Rol ID</th>
+        <th class="d-none d-md-table-cell" scope="col">Rol</th>
       </tr>
     </thead>
     <tbody>
+      @if(datos().datos.length === 0) {
       <tr>
-        @if(datos().datos.length === 0) {
         <td colspan="4" class="text-center">No hay datos disponibles</td>
-        } @else { @for (item of datos().datos; track $index) {
+      </tr>
+      } @else { @for (item of datos().datos; track $index) {
+      <tr class="context-row" (contextmenu)="onRightClick($event, item)">
         <td>{{ item.usuarioID }}</td>
         <td>{{ item.usuarioNombre }}</td>
-        <td>{{ item.rolID }}</td>
-        <td>{{ item.rolNombre }}</td>
-        }}
+        <td class="d-none d-md-table-cell">{{ item.rolID }}</td>
+        <td class="d-none d-md-table-cell">{{ item.rolNombre }}</td>
       </tr>
+      } }
+
+      <app-constext-menu
+        [menuVisible]="menuVisible()"
+        [menuX]="menuX()"
+        [menuY]="menuY()"
+        [actions]="actions"
+        [contextData]="selectedUser()"
+        (actionSelected)="handleAction($event)"
+      />
+
+      <!-- <app-buscar-usuario-context-menu
+        [menuVisible]="menuVisible()"
+        [menuX]="menuX()"
+        [menuY]="menuY()"
+        (editar)="editar()"
+        (eliminar)="eliminar()"
+      >
+      </app-buscar-usuario-context-menu> -->
     </tbody>
   </table>
 </div>

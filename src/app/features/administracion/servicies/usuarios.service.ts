@@ -15,17 +15,27 @@ export class UsuariosService {
   usuarios = inject(UsuarioApiService);
 
   getUsuarioFind(request: FindRequest) {
-    if (!request.buscar || request.buscar.length < 3) {
-      return of({
-        datos: [],
-        pagina: 1,
-        tamanoPagina: 10,
-        totalRegistros: 0,
-        totalPaginas: 0,
-        tienePaginaAnterior: false,
-        tienePaginaSiguiente: false,
-      } as FindResponse<UsuarioResponse>);
-    }
+    // if (!request.buscar || request.buscar.length < 3) {
+    //   return of({
+    //     datos: [],
+    //     pagina: 1,
+    //     tamanoPagina: 10,
+    //     totalRegistros: 0,
+    //     totalPaginas: 0,
+    //     tienePaginaAnterior: false,
+    //     tienePaginaSiguiente: false,
+    //   } as FindResponse<UsuarioResponse>);
+    // }
+
+    of({
+      datos: [],
+      pagina: 1,
+      tamanoPagina: 10,
+      totalRegistros: 0,
+      totalPaginas: 0,
+      tienePaginaAnterior: false,
+      tienePaginaSiguiente: false,
+    } as FindResponse<UsuarioResponse>);
 
     // Defaults de paginación
     request.pagina = request.pagina || 1;

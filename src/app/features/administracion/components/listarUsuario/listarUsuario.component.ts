@@ -3,15 +3,17 @@ import {
   Component,
   ElementRef,
   HostListener,
+  inject,
   input,
   signal,
 } from '@angular/core';
 import { FindResponse } from 'src/app/core/models/usuario/response/find-response';
 import { UsuarioResponse } from 'src/app/core/models/usuario/response/usuario-response';
+import { ConstextMenuComponent } from 'src/app/shared/components/constextMenu/constextMenu.component';
 import {
   ContextMenuAction,
-  ConstextMenuComponent,
-} from 'src/app/shared/components/constextMenu/constextMenu.component';
+  ContextMenuService,
+} from 'src/app/shared/components/services/contextMenu.service';
 
 @Component({
   selector: 'app-listar-usuario',
@@ -20,6 +22,7 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ListarUsuarioComponent {
+  contextMenu = inject(ContextMenuService);
   datos = input.required<FindResponse<UsuarioResponse>>();
 
   menuVisible = signal(false);
@@ -27,39 +30,17 @@ export class ListarUsuarioComponent {
   menuY = signal(0);
   selectedUser = signal<any | null>(null);
 
-  constructor(private elementRef: ElementRef) {}
-
+  //opciones constext menu
   actions: ContextMenuAction[] = [
     { label: 'Editar', icon: 'bi bi-pencil', type: 'editar' },
     { label: 'Eliminar', icon: 'bi bi-trash', type: 'eliminar' },
     { label: 'Detalles', icon: 'bi bi-info-circle', type: 'detalle' },
   ];
-
-  onRightClick(event: MouseEvent, user: any) {
-    event.preventDefault();
-    this.selectedUser.set(user);
-    this.menuX.set(event.clientX);
-    this.menuY.set(event.clientY);
-    this.menuVisible.set(true);
-  }
-
-  // onGlobalClick() {
-  //   this.menuVisible.set(false);
-  // }
-
-  /** 👉 Global Click */
-  @HostListener('document:click', ['$event'])
-  onGlobalClick(event: MouseEvent) {
-    if (this.menuVisible() && !this.elementRef.nativeElement.contains(event.target)) {
-      this.menuVisible.set(false);
-    }
-  }
-
+  //acciones del context menu
   handleAction(event: { action: ContextMenuAction; data: any | null }) {
     switch (event.action.type) {
       case 'editar':
         console.log('Editar', event.data?.usuarioID);
-        console.log('Editar', event.data);
         break;
       case 'eliminar':
         console.log('Eliminar', event.data?.usuarioID);
@@ -68,47 +49,10 @@ export class ListarUsuarioComponent {
         console.log('Detalle', event.data?.usuarioID);
         break;
     }
-    this.menuVisible.set(false);
+    this.contextMenu.close();
   }
 
-  @HostListener('document:keydown.escape')
-  onEscape() {
-    this.menuVisible.set(false);
+  onRightClick(event: MouseEvent, user: any) {
+    this.contextMenu.open(event, user, this.actions);
   }
-
-  // menuVisible = signal(false);
-  // menuX = signal(0);
-  // menuY = signal(0);
-  // selectedUser = signal<any | null>(null);
-
-  // // 👇 Detecta clic derecho en una fila
-  // onRightClick(event: MouseEvent, user: any) {
-  //   event.preventDefault();
-  //   this.selectedUser.set(user);
-  //   this.menuX.set(event.clientX);
-  //   this.menuY.set(event.clientY);
-  //   this.menuVisible.set(true);
-  // }
-
-  // // 👇 Cierra el menú cuando se hace clic en cualquier parte
-  // @HostListener('document:click')
-  // closeMenu() {
-  //   this.menuVisible.set(false);
-  // }
-
-  // editar() {
-  //   const user = this.selectedUser(); // 👈 leer el valor del signal
-  //   if (user) {
-  //     alert(`Editar usuario con ID: ${user.usuarioID}`);
-  //   }
-  //   this.closeMenu();
-  // }
-
-  // eliminar() {
-  //   const user = this.selectedUser();
-  //   if (user) {
-  //     alert(`Eliminar usuario con ID: ${user.usuarioID}`);
-  //   }
-  //   this.closeMenu();
-  // }
 }

@@ -1,18 +1,5 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
-
-export interface ContextMenuAction {
-  /** identificador único para saber qué hacer */
-  type: string;
-
-  /** texto visible en el menú */
-  label: string;
-
-  /** opcional: clase de icono (ej: Bootstrap, FontAwesome, etc.) */
-  icon?: string;
-
-  /** opcional: si quieres deshabilitar acciones en ciertos casos */
-  disabled?: boolean;
-}
+import { ContextMenuAction } from '../services/contextMenu.service';
 
 @Component({
   selector: 'app-constext-menu',

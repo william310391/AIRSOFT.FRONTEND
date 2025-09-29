@@ -1,5 +1,5 @@
 import { Component, inject, Input } from '@angular/core';
-import { LoadingService } from '../services/loading.service';
+import { LoadingService } from '../../services/loading.service';
 
 @Component({
   selector: 'app-loading',

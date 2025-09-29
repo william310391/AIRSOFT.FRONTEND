@@ -23,22 +23,13 @@
       } }
 
       <app-constext-menu
-        [menuVisible]="menuVisible()"
-        [menuX]="menuX()"
-        [menuY]="menuY()"
-        [actions]="actions"
-        [contextData]="selectedUser()"
+        [menuVisible]="contextMenu.menuVisible()"
+        [menuX]="contextMenu.menuX()"
+        [menuY]="contextMenu.menuY()"
+        [actions]="contextMenu.actions()"
+        [contextData]="contextMenu.selectedData()"
         (actionSelected)="handleAction($event)"
       />
-
-      <!-- <app-buscar-usuario-context-menu
-        [menuVisible]="menuVisible()"
-        [menuX]="menuX()"
-        [menuY]="menuY()"
-        (editar)="editar()"
-        (eliminar)="eliminar()"
-      >
-      </app-buscar-usuario-context-menu> -->
     </tbody>
   </table>
 </div>

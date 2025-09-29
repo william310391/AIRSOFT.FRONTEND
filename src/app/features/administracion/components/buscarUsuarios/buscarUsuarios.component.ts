@@ -4,7 +4,7 @@ import { FindRequest } from 'src/app/core/models/usuario/request/find-request';
 import { UsuariosService } from '../../servicies/usuarios.service';
 import { UsuarioResponse } from 'src/app/core/models/usuario/response/usuario-response';
 import { FindResponse } from 'src/app/core/models/usuario/response/find-response';
-import { LoadingService } from 'src/app/shared/components/services/loading.service';
+import { LoadingService } from 'src/app/shared/services/loading.service';
 import { PaginacionComponent } from '../../../../shared/components/paginacion/paginacion.component';
 
 @Component({

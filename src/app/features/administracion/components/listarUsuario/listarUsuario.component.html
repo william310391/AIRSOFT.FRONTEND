@@ -3,7 +3,9 @@
     <thead class="table-light">
       <tr>
         <th scope="col">#</th>
-        <th scope="col">Nombre Usuario</th>
+        <th scope="col">Usuario Cuenta</th>
+        <th scope="col">Usuario Nombre</th>
+        <th scope="col">Usuario Estado</th>
         <th class="d-none d-md-table-cell" scope="col">Rol ID</th>
         <th class="d-none d-md-table-cell" scope="col">Rol</th>
       </tr>
@@ -16,7 +18,9 @@
       } @else { @for (item of datos().datos; track $index) {
       <tr class="context-row" (contextmenu)="onRightClick($event, item)">
         <td>{{ item.usuarioID }}</td>
+        <td>{{ item.usuarioCuenta }}</td>
         <td>{{ item.usuarioNombre }}</td>
+        <td>{{ item.activoDescripcion }}</td>
         <td class="d-none d-md-table-cell">{{ item.rolID }}</td>
         <td class="d-none d-md-table-cell">{{ item.rolNombre }}</td>
       </tr>

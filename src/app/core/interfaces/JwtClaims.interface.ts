@@ -1,9 +1,9 @@
 export interface JwtClaims {
   usuarioNombre: string;
+  usuarioCuenta: string;
   usuarioID: number;
   usuarioRol: string;
   usuarioUrlImagen: string;
-  // listaMenu: MenuPaginaResponse[];
   exp: number;
   iss: string;
   aud: string;

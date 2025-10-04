@@ -15,7 +15,7 @@ export default class LoginAuthPageComponent {
   apiServicio = inject(AuthApiService);
   authServicio = inject(AuthService);
 
-  usuarioNombre = signal<string>('');
+  usuarioCuenta = signal<string>('');
   password = signal<string>('');
 
   isLoading = signal<boolean>(false);
@@ -55,7 +55,7 @@ export default class LoginAuthPageComponent {
 
   cargarDatos(): LoginRequest {
     return {
-      usuarioNombre: this.usuarioNombre(),
+      usuarioCuenta: this.usuarioCuenta(),
       password: this.password(),
     };
   }

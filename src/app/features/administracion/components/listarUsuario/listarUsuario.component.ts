@@ -1,8 +1,16 @@
-import { ChangeDetectionStrategy, Component, inject, input, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  HostListener,
+  inject,
+  input,
+  signal,
+} from '@angular/core';
 import { FindResponse } from 'src/app/core/models/usuario/response/find-response';
 import { UsuarioResponse } from 'src/app/core/models/usuario/response/usuario-response';
 import { ConstextMenuComponent } from 'src/app/shared/components/constextMenu/constextMenu.component';
-import { ContextMenuService } from 'src/app/shared/services/contextMenu.service';
+import { ContextMenuService } from 'src/app/shared/components/services/contextMenu.service';
 import { ContextMenuAction } from 'src/app/shared/interfaces/contextMenuAction';
 
 @Component({
@@ -14,6 +22,11 @@ import { ContextMenuAction } from 'src/app/shared/interfaces/contextMenuAction';
 export class ListarUsuarioComponent {
   contextMenu = inject(ContextMenuService);
   datos = input.required<FindResponse<UsuarioResponse>>();
+
+  menuVisible = signal(false);
+  menuX = signal(0);
+  menuY = signal(0);
+  selectedUser = signal<any | null>(null);
 
   //opciones constext menu
   actions: ContextMenuAction[] = [

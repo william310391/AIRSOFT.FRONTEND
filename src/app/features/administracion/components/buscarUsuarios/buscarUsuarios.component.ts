@@ -7,6 +7,7 @@ import { FindResponse } from 'src/app/core/models/usuario/response/find-response
 import { LoadingService } from 'src/app/shared/services/loading.service';
 import { PaginacionComponent } from '../../../../shared/components/paginacion/paginacion.component';
 import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
+import { ModalService } from 'src/app/shared/components/services/modal.service';
 
 @Component({
   selector: 'app-buscar-usuarios',
@@ -68,13 +69,22 @@ export class BuscarUsuariosComponent {
     }
   }
 
-  showModal = signal(false);
+  private modalService = inject(ModalService);
 
-  openModal() {
-    this.showModal.set(true);
+  openModal(id: string) {
+    this.modalService.open(id);
   }
 
-  closeModal() {
-    this.showModal.set(false);
+  closeModal(id: string) {
+    this.modalService.close(id);
   }
+  // showModal = signal(false);
+
+  // openModal() {
+  //   this.showModal.set(true);
+  // }
+
+  // closeModal() {
+  //   this.showModal.set(false);
+  // }
 }

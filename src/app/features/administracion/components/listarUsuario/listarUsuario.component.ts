@@ -3,6 +3,7 @@ import { FindResponse } from 'src/app/core/models/usuario/response/find-response
 import { UsuarioResponse } from 'src/app/core/models/usuario/response/usuario-response';
 import { ConstextMenuComponent } from 'src/app/shared/components/constextMenu/constextMenu.component';
 import { ContextMenuService } from 'src/app/shared/components/services/contextMenu.service';
+import { ModalService } from 'src/app/shared/components/services/modal.service';
 import { ContextMenuAction } from 'src/app/shared/interfaces/contextMenuAction';
 
 @Component({
@@ -32,6 +33,7 @@ export class ListarUsuarioComponent {
         console.log(event.data);
         console.log('Editar', event.data?.usuarioID);
         // this.openModal();
+        this.openModal('userModal2');
         break;
       case 'eliminar':
         console.log('Eliminar', event.data?.usuarioID);
@@ -45,6 +47,16 @@ export class ListarUsuarioComponent {
 
   onRightClick(event: MouseEvent, user: any) {
     this.contextMenu.open(event, user, this.actions);
+  }
+
+  modalService = inject(ModalService);
+
+  openModal(id: string) {
+    this.modalService.open(id);
+  }
+
+  closeModal(id: string) {
+    this.modalService.close(id);
   }
 
   // showModal = signal(false);

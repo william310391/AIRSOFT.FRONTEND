@@ -13,7 +13,7 @@
     <tbody>
       @if(datos().datos.length === 0) {
       <tr>
-        <td colspan="4" class="text-center">No hay datos disponibles</td>
+        <td colspan="6" class="text-center">No hay datos disponibles</td>
       </tr>
       } @else { @for (item of datos().datos; track $index) {
       <tr class="context-row" (contextmenu)="onRightClick($event, item)">

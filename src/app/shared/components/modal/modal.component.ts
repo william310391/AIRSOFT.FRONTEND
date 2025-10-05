@@ -9,6 +9,7 @@ import {
   model,
 } from '@angular/core';
 import { Modal } from 'bootstrap';
+import { ModalService } from '../services/modal.service';
 
 @Component({
   selector: 'app-modal',
@@ -16,14 +17,11 @@ import { Modal } from 'bootstrap';
   templateUrl: './modal.component.html',
 })
 export class ModalComponent implements AfterViewInit {
-  // @Input() modalId = 'defaultModal';
-  //  @Input() visible = signal(false);
+  modalId = input('defaultModal'); // 👈 id del modal
+  modalRef!: Modal;
 
-  modalId = input('defaultModal'); // 👈 Input reactivo tipo signal
-  visible = model<boolean>(false); // 👈 Input reactivo tipo signal
-
-  private modalRef!: Modal;
-  private injector = inject(EnvironmentInjector);
+  injector = inject(EnvironmentInjector);
+  modalService = inject(ModalService);
 
   ngAfterViewInit() {
     const modalElement = document.getElementById(this.modalId());
@@ -32,30 +30,27 @@ export class ModalComponent implements AfterViewInit {
       this.modalRef = new Modal(modalElement, {
         backdrop: true,
         keyboard: true,
-        focus: true, // 👈 Bootstrap se encarga de mover el foco al abrir
+        focus: true,
       });
 
-      // Cuando se cierra manualmente, sincroniza el signal
+      // 👉 sincronizar con servicio al cerrarse
       modalElement.addEventListener('hidden.bs.modal', () => {
-        this.visible.set(false);
-
-        // 👇 Importante: asegurarse que ningún hijo del modal quede con foco
+        this.modalService.close(this.modalId());
         (document.activeElement as HTMLElement)?.blur();
       });
 
-      // Cuando se abre, mover foco al primer input/botón disponible
+      // 👉 al abrir, poner foco en el primer input/botón
       modalElement.addEventListener('shown.bs.modal', () => {
-        // Busca el primer input, select o botón, ignorando la X de cerrar
         const focusable = modalElement.querySelector<HTMLElement>(
           'input, select, textarea, button:not(.btn-close), [tabindex]:not([tabindex="-1"])'
         );
         focusable?.focus();
       });
 
-      // Reactividad: abre/cierra con signal
+      // 👉 reactividad desde el servicio
       runInInjectionContext(this.injector, () => {
         effect(() => {
-          if (this.visible()) {
+          if (this.modalService.isVisible(this.modalId())) {
             this.modalRef.show();
           } else {
             this.modalRef.hide();
@@ -66,6 +61,6 @@ export class ModalComponent implements AfterViewInit {
   }
 
   close() {
-    this.visible.set(false);
+    this.modalService.close(this.modalId());
   }
 }

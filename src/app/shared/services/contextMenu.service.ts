@@ -1,41 +1,44 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, signal, WritableSignal } from '@angular/core';
 import { ContextMenuAction } from '../interfaces/contextMenuAction';
+export interface ContextMenuState {
+  menuVisible: boolean;
+  menuX: number;
+  menuY: number;
+  contextData: any;
+  actions: ContextMenuAction[];
+}
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({ providedIn: 'root' })
 export class ContextMenuService {
-  // Estado del menú
-  menuVisible = signal(false);
-  menuX = signal(0);
-  menuY = signal(0);
-  selectedData = signal<any | null>(null);
-  actions = signal<ContextMenuAction[]>([]);
+  // Guardamos un registro de menús por ID
+  private menus: WritableSignal<Record<string, ContextMenuState>> = signal({});
 
   constructor() {
+    // Cerrar menú al hacer clic fuera
     document.addEventListener('click', (event: MouseEvent) => {
       const target = event.target as HTMLElement;
-      if (
-        this.menuVisible() &&
-        !target.closest('.context-row') &&
-        !target.closest('app-constext-menu')
-      ) {
-        this.close();
-      }
+      Object.keys(this.menus()).forEach((id) => {
+        const menu = this.menus()[id];
+        if (
+          menu.menuVisible &&
+          !target.closest('.context-row') && // tu fila/elemento
+          !target.closest(`app-constext-menu[id="${id}"]`)
+        ) {
+          this.close(id);
+        }
+      });
     });
 
+    // Cerrar menú al presionar Escape
     document.addEventListener('keydown', (event: KeyboardEvent) => {
-      if (event.key === 'Escape' && this.menuVisible()) {
-        this.close();
+      if (event.key === 'Escape') {
+        Object.keys(this.menus()).forEach((id) => this.close(id));
       }
     });
   }
 
-  /** 👉 Mostrar menú en coordenadas X/Y con acciones y data */
-  open(event: MouseEvent, data: any, actions: ContextMenuAction[]) {
+  open(id: string, event: MouseEvent, data: any, actions: ContextMenuAction[]) {
     event.preventDefault();
-    this.selectedData.set(data);
-    this.actions.set(actions);
 
     const menuWidth = 180;
     const menuHeight = 120;
@@ -45,20 +48,26 @@ export class ContextMenuService {
     let x = event.clientX;
     let y = event.clientY;
 
-    if (x + menuWidth > viewportWidth) {
-      x = viewportWidth - menuWidth - 10;
-    }
-    if (y + menuHeight > viewportHeight) {
-      y = viewportHeight - menuHeight - 10;
-    }
+    if (x + menuWidth > viewportWidth) x = viewportWidth - menuWidth - 10;
+    if (y + menuHeight > viewportHeight) y = viewportHeight - menuHeight - 10;
 
-    this.menuX.set(x);
-    this.menuY.set(y);
-    this.menuVisible.set(true);
+    // ✅ Usando .update() en lugar de mutate()
+    this.menus.update((m) => ({
+      ...m,
+      [id]: { menuVisible: true, menuX: x, menuY: y, contextData: data, actions },
+    }));
   }
 
-  /** 👉 Cerrar menú */
-  close() {
-    this.menuVisible.set(false);
+  close(id: string) {
+    this.menus.update((m) => ({
+      ...m,
+      [id]: m[id] ? { ...m[id], menuVisible: false } : m[id],
+    }));
+  }
+
+  getMenu(id: string): ContextMenuState {
+    return (
+      this.menus()[id] || { menuVisible: false, menuX: 0, menuY: 0, contextData: null, actions: [] }
+    );
   }
 }

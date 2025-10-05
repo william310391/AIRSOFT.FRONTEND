@@ -12,13 +12,10 @@ import { ContextMenuAction } from 'src/app/shared/interfaces/contextMenuAction';
   templateUrl: './listarUsuario.component.html',
 })
 export class ListarUsuarioComponent {
-  contextMenu = inject(ContextMenuService);
   datos = input.required<FindResponse<UsuarioResponse>>();
 
-  menuVisible = signal(false);
-  menuX = signal(0);
-  menuY = signal(0);
-  selectedUser = signal<any | null>(null);
+  contextMenu = inject(ContextMenuService);
+  modalService = inject(ModalService);
 
   //opciones constext menu
   actions: ContextMenuAction[] = [
@@ -42,14 +39,12 @@ export class ListarUsuarioComponent {
         console.log('Detalle', event.data?.usuarioID);
         break;
     }
-    this.contextMenu.close();
+    this.contextMenu.close('menu1');
   }
 
   onRightClick(event: MouseEvent, user: any) {
-    this.contextMenu.open(event, user, this.actions);
+    this.contextMenu.open('menu1', event, user, this.actions);
   }
-
-  modalService = inject(ModalService);
 
   openModal(id: string) {
     this.modalService.open(id);
@@ -58,14 +53,4 @@ export class ListarUsuarioComponent {
   closeModal(id: string) {
     this.modalService.close(id);
   }
-
-  // showModal = signal(false);
-
-  // openModal() {
-  //   this.showModal.set(true);
-  // }
-
-  // closeModal() {
-  //   this.showModal.set(false);
-  // }
 }

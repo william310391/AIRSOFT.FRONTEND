@@ -36,7 +36,7 @@
 <button class="btn btn-primary" (click)="openModal('userModal')">Abrir userModal</button>
 <button class="btn btn-primary" (click)="openModal('userModal2')">Abrir userModal2</button>
 
-<app-modal [modalId]="'userModal'">
+<app-modal [modalId]="'userModal'" [size]="'sm'">
   <span modal-title>Mi Modal</span>
   <div modal-body>
     <p>Hola 👋 este es el contenido del modal. userModal</p>
@@ -47,7 +47,7 @@
   </div>
 </app-modal>
 
-<app-modal [modalId]="'userModal2'">
+<app-modal [modalId]="'userModal2'" [size]="'lg'">
   <span modal-title>Mi Modal</span>
   <div modal-body>
     <p>Hola 👋 este es el contenido del modal. userModal2 sssssssss</p>

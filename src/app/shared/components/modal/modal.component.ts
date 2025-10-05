@@ -17,6 +17,7 @@ import { ModalService } from '../services/modal.service';
   templateUrl: './modal.component.html',
 })
 export class ModalComponent implements AfterViewInit {
+  size = input<'sm' | 'lg' | 'xl' | ''>('sm');
   modalId = input('defaultModal'); // 👈 id del modal
   modalRef!: Modal;
 

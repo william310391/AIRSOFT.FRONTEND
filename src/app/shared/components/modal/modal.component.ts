@@ -9,7 +9,7 @@ import {
   model,
 } from '@angular/core';
 import { Modal } from 'bootstrap';
-import { ModalService } from '../services/modal.service';
+import { ModalService } from '../../services/modal.service';
 
 @Component({
   selector: 'app-modal',

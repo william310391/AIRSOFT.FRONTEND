@@ -7,7 +7,7 @@ import { FindResponse } from 'src/app/core/models/usuario/response/find-response
 import { LoadingService } from 'src/app/shared/services/loading.service';
 import { PaginacionComponent } from '../../../../shared/components/paginacion/paginacion.component';
 import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
-import { ModalService } from 'src/app/shared/components/services/modal.service';
+import { ModalService } from 'src/app/shared/services/modal.service';
 
 @Component({
   selector: 'app-buscar-usuarios',

@@ -6,11 +6,12 @@ import { UsuarioResponse } from 'src/app/core/models/usuario/response/usuario-re
 import { FindResponse } from 'src/app/core/models/usuario/response/find-response';
 import { LoadingService } from 'src/app/shared/services/loading.service';
 import { PaginacionComponent } from '../../../../shared/components/paginacion/paginacion.component';
+import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
 
 @Component({
   selector: 'app-buscar-usuarios',
   templateUrl: './buscarUsuarios.component.html',
-  imports: [ListarUsuarioComponent, PaginacionComponent],
+  imports: [ListarUsuarioComponent, PaginacionComponent, ModalComponent],
 })
 export class BuscarUsuariosComponent {
   buscar = signal<string>('');
@@ -65,5 +66,15 @@ export class BuscarUsuariosComponent {
       this.currentPage.set(page);
       this.buscarUsuarios();
     }
+  }
+
+  showModal = signal(false);
+
+  openModal() {
+    this.showModal.set(true);
+  }
+
+  closeModal() {
+    this.showModal.set(false);
   }
 }

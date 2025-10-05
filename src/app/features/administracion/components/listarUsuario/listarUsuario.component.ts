@@ -1,12 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  HostListener,
-  inject,
-  input,
-  signal,
-} from '@angular/core';
+import { Component, inject, input, signal } from '@angular/core';
 import { FindResponse } from 'src/app/core/models/usuario/response/find-response';
 import { UsuarioResponse } from 'src/app/core/models/usuario/response/usuario-response';
 import { ConstextMenuComponent } from 'src/app/shared/components/constextMenu/constextMenu.component';
@@ -17,7 +9,6 @@ import { ContextMenuAction } from 'src/app/shared/interfaces/contextMenuAction';
   selector: 'app-listar-usuario',
   imports: [ConstextMenuComponent],
   templateUrl: './listarUsuario.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ListarUsuarioComponent {
   contextMenu = inject(ContextMenuService);
@@ -40,6 +31,7 @@ export class ListarUsuarioComponent {
       case 'editar':
         console.log(event.data);
         console.log('Editar', event.data?.usuarioID);
+        // this.openModal();
         break;
       case 'eliminar':
         console.log('Eliminar', event.data?.usuarioID);
@@ -54,4 +46,14 @@ export class ListarUsuarioComponent {
   onRightClick(event: MouseEvent, user: any) {
     this.contextMenu.open(event, user, this.actions);
   }
+
+  // showModal = signal(false);
+
+  // openModal() {
+  //   this.showModal.set(true);
+  // }
+
+  // closeModal() {
+  //   this.showModal.set(false);
+  // }
 }

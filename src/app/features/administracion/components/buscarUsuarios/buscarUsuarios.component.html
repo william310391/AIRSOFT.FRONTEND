@@ -32,3 +32,16 @@
     />
   </div>
 </div>
+
+<button class="btn btn-primary" (click)="openModal()">Abrir Modal</button>
+
+<app-modal [modalId]="'userModal'" [visible]="showModal()">
+  <span modal-title>Mi Modal</span>
+  <div modal-body>
+    <p>Hola 👋 este es el contenido del modal.</p>
+  </div>
+  <div modal-footer>
+    <button class="btn btn-secondary" (click)="closeModal()" autofocus>Cerrar</button>
+    <button class="btn btn-success">Aceptar</button>
+  </div>
+</app-modal>

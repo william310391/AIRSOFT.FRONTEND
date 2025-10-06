@@ -26,7 +26,7 @@
       </tr>
       } }
 
-      <app-constext-menu menuId="menu1" (actionSelected)="handleAction($event)" />
+      <app-constext-menu [menuId]="modalId()" (actionSelected)="handleAction($event)" />
 
       <!-- <app-constext-menu
         [menuVisible]="contextMenu.getMenu('menu1').menuVisible"

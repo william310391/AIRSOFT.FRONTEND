@@ -32,28 +32,3 @@
     />
   </div>
 </div>
-
-<button class="btn btn-primary" (click)="openModal('userModal')">Abrir userModal</button>
-<button class="btn btn-primary" (click)="openModal('userModal2')">Abrir userModal2</button>
-
-<app-modal [modalId]="'userModal'" [size]="'sm'">
-  <span modal-title>Mi Modal</span>
-  <div modal-body>
-    <p>Hola 👋 este es el contenido del modal. userModal</p>
-  </div>
-  <div modal-footer>
-    <button class="btn btn-secondary" (click)="closeModal('userModal')" autofocus>Cerrar</button>
-    <button class="btn btn-success">Aceptar</button>
-  </div>
-</app-modal>
-
-<app-modal [modalId]="'userModal2'" [size]="'lg'">
-  <span modal-title>Mi Modal</span>
-  <div modal-body>
-    <p>Hola 👋 este es el contenido del modal. userModal2 sssssssss</p>
-  </div>
-  <div modal-footer>
-    <button class="btn btn-secondary" (click)="closeModal('userModal2')" autofocus>Cerrar</button>
-    <button class="btn btn-success">Aceptar</button>
-  </div>
-</app-modal>

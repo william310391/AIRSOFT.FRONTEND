@@ -6,13 +6,12 @@ import { UsuarioResponse } from 'src/app/core/models/usuario/response/usuario-re
 import { FindResponse } from 'src/app/core/models/usuario/response/find-response';
 import { LoadingService } from 'src/app/shared/services/loading.service';
 import { PaginacionComponent } from '../../../../shared/components/paginacion/paginacion.component';
-import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
 import { ModalService } from 'src/app/shared/services/modal.service';
 
 @Component({
   selector: 'app-buscar-usuarios',
   templateUrl: './buscarUsuarios.component.html',
-  imports: [ListarUsuarioComponent, PaginacionComponent, ModalComponent],
+  imports: [ListarUsuarioComponent, PaginacionComponent],
 })
 export class BuscarUsuariosComponent {
   buscar = signal<string>('');
@@ -69,15 +68,15 @@ export class BuscarUsuariosComponent {
     }
   }
 
-  private modalService = inject(ModalService);
+  // private modalService = inject(ModalService);
 
-  openModal(id: string) {
-    this.modalService.open(id);
-  }
+  // openModal(id: string) {
+  //   this.modalService.open(id);
+  // }
 
-  closeModal(id: string) {
-    this.modalService.close(id);
-  }
+  // closeModal(id: string) {
+  //   this.modalService.close(id);
+  // }
   // showModal = signal(false);
 
   // openModal() {

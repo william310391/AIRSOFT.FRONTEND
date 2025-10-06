@@ -17,20 +17,26 @@ export class ListarUsuarioComponent {
   contextMenu = inject(ContextMenuService);
   modalService = inject(ModalService);
 
+  modalId = signal<string>('menu1');
+
   //opciones constext menu
   actions: ContextMenuAction[] = [
-    { label: 'Editar', icon: 'bi bi-pencil', type: 'editar' },
+    { label: 'Nuevo', icon: 'bi bi-pencil', type: 'nuevo' },
+    { label: 'Editar', icon: 'bi bi-pencil', type: 'editar', disabled: false },
     { label: 'Eliminar', icon: 'bi bi-trash', type: 'eliminar' },
     { label: 'Detalles', icon: 'bi bi-info-circle', type: 'detalle' },
   ];
   //acciones del context menu
   handleAction(event: { action: ContextMenuAction; data: any | null }) {
     switch (event.action.type) {
+      case 'nuevo':
+        console.log(event.data);
+        console.log('nuevo', event.data?.usuarioID);
+        this.openModal('userModal');
+        break;
       case 'editar':
         console.log(event.data);
         console.log('Editar', event.data?.usuarioID);
-        // this.openModal();
-        this.openModal('userModal2');
         break;
       case 'eliminar':
         console.log('Eliminar', event.data?.usuarioID);
@@ -39,11 +45,11 @@ export class ListarUsuarioComponent {
         console.log('Detalle', event.data?.usuarioID);
         break;
     }
-    this.contextMenu.close('menu1');
+    this.contextMenu.close(this.modalId());
   }
 
   onRightClick(event: MouseEvent, user: any) {
-    this.contextMenu.open('menu1', event, user, this.actions);
+    this.contextMenu.open(this.modalId(), event, user, this.actions);
   }
 
   openModal(id: string) {

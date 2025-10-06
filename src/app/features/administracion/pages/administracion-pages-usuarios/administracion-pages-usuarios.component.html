@@ -1,1 +1,30 @@
 <app-buscar-usuarios />
+
+<button class="btn btn-primary" (click)="openModal('userModal')">Abrir userModal</button>
+
+<app-modal [modalId]="'userModal'" [size]="''">
+  <span modal-title>Nuevo Usuario</span>
+  <div modal-body>
+    <div class="mb-3">
+      <label class="form-label">Cuenta</label>
+      <input type="text" class="form-control" />
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Nombre</label>
+      <input type="text" class="form-control" />
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Rol</label>
+      <select class="form-select">
+        <option>Usuario</option>
+        <option>Administtrador</option>
+      </select>
+    </div>
+  </div>
+  <div modal-footer>
+    <div class="d-grid gap-2 d-md-block d-md-flex">
+      <button class="btn btn-secondary" (click)="closeModal('userModal')" autofocus>Cerrar</button>
+      <button class="btn btn-success">Guardar</button>
+    </div>
+  </div>
+</app-modal>

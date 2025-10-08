@@ -1,30 +1,76 @@
 <app-buscar-usuarios />
 
-<button class="btn btn-primary" (click)="openModal('userModal')">Abrir userModal</button>
-
 <app-modal [modalId]="'userModal'" [size]="''">
   <span modal-title>Nuevo Usuario</span>
   <div modal-body>
-    <div class="mb-3">
-      <label class="form-label">Cuenta</label>
-      <input type="text" class="form-control" />
-    </div>
-    <div class="mb-3">
-      <label class="form-label">Nombre</label>
-      <input type="text" class="form-control" />
-    </div>
-    <div class="mb-3">
-      <label class="form-label">Rol</label>
-      <select class="form-select">
-        <option>Usuario</option>
-        <option>Administtrador</option>
-      </select>
-    </div>
+    <form>
+      <div class="mb-3">
+        <label class="form-label">Cuenta</label>
+        <input
+          type="text"
+          class="form-control"
+          autocomplete="off"
+          [value]="usuarioCuenta()"
+          (input)="usuarioCuenta.set(txtUsuarioCuenta.value)"
+          #txtUsuarioCuenta
+        />
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Nombre</label>
+        <input
+          type="text"
+          class="form-control"
+          autocomplete="off"
+          [value]="usuarioNombre()"
+          (input)="usuarioNombre.set(txtUsuarioNombre.value)"
+          #txtUsuarioNombre
+        />
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Contraña</label>
+        <input
+          type="password"
+          class="form-control"
+          autocomplete="new-password"
+          [value]="contrasena()"
+          (input)="contrasena.set(txtContrasena.value)"
+          #txtContrasena
+        />
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Comparar Contraseña</label>
+        <input
+          type="password"
+          class="form-control"
+          autocomplete="new-password"
+          [value]="contrasenaConfirmar()"
+          (input)="contrasenaConfirmar.set(txtContrasenaConfirmar.value)"
+          #txtContrasenaConfirmar
+        />
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Rol</label>
+        <select
+          id="rolId"
+          class="form-control form-select"
+          [value]="rolId()"
+          (change)="rolId.set(toNumber(selectRol.value))"
+          #selectRol
+        >
+          <option value="0" disabled>Seleccione un rol</option>
+          @for (item of rol(); track $index){
+          <option value="{{ item.rolID }}">{{ item.rolNombre }}</option>
+          }
+        </select>
+      </div>
+    </form>
   </div>
   <div modal-footer>
     <div class="d-grid gap-2 d-md-block d-md-flex">
       <button class="btn btn-secondary" (click)="closeModal('userModal')" autofocus>Cerrar</button>
-      <button class="btn btn-success">Guardar</button>
+      <button class="btn btn-success" (click)="onclickCreate()">Guardar</button>
     </div>
   </div>
 </app-modal>
+
+<app-constext-menu [menuId]="menuId()" (actionSelected)="handleAction($event)" />

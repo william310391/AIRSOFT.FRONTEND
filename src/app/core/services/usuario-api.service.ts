@@ -8,6 +8,7 @@ import { map } from 'rxjs';
 import { FindRequest } from '../models/usuario/request/find-request';
 import { UsuarioResponse } from '../models/usuario/response/usuario-response';
 import { FindResponse } from '../models/usuario/response/find-response';
+import { UsuarioRequest } from '../models/usuario/request/usuario-request';
 
 @Injectable({
   providedIn: 'root',
@@ -31,6 +32,18 @@ export class UsuarioApiService {
         `${this.urlServicio}/getUsuarioFind`,
         request
       )
+      .pipe(map((res) => (res.success ? res.data : null)));
+  }
+
+  GetRol() {
+    return this.http
+      .get<ApiResponse<any>>(`${this.urlServicio}/getRol`)
+      .pipe(map((res) => (res.success ? res.data : null)));
+  }
+
+  Create(request: UsuarioRequest) {
+    return this.http
+      .post<ApiResponse<any>>(`${this.urlServicio}/create`, request)
       .pipe(map((res) => (res.success ? res.data : null)));
   }
 }

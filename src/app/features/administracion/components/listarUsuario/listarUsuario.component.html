@@ -16,7 +16,12 @@
         <td colspan="6" class="text-center">No hay datos disponibles</td>
       </tr>
       } @else { @for (item of datos().datos; track $index) {
-      <tr class="context-row" (contextmenu)="onRightClick($event, item)">
+      <tr class="context-row">
+        <input type="hidden" [value]="item.usuarioID" id="hd_usuarioID" />
+        <input type="hidden" [value]="item.usuarioCuenta" id="hd_usuarioCuenta" />
+        <input type="hidden" [value]="item.usuarioNombre" id="hd_usuarioNombre" />
+        <input type="hidden" [value]="item.rolID" id="hd_rolID" />
+        <input type="hidden" [value]="item.activo" id="hd_activo" />
         <td>{{ item.usuarioID }}</td>
         <td>{{ item.usuarioCuenta }}</td>
         <td>{{ item.usuarioNombre }}</td>
@@ -26,7 +31,7 @@
       </tr>
       } }
 
-      <app-constext-menu [menuId]="modalId()" (actionSelected)="handleAction($event)" />
+      <!-- <app-constext-menu [menuId]="menuId()" (actionSelected)="handleAction($event)" /> -->
 
       <!-- <app-constext-menu
         [menuVisible]="contextMenu.getMenu('menu1').menuVisible"

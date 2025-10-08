@@ -134,7 +134,6 @@ export default class AdministracionPagesUsuariosComponent {
 
   onclickCreate() {
     // El UsuarioRequest computed ya tiene todos los valores actualizados
-
     this.usuarioService.create(this.usuarioRequest()).subscribe({
       next: () => {
         this.alertService.alert({
@@ -145,36 +144,6 @@ export default class AdministracionPagesUsuariosComponent {
         this.limpiarFormulario();
         this.closeModal('userModal');
       },
-      error: () => {
-        // console.log('hay error');
-        // El error ya fue manejado en el servicio centralizado
-        // this.alertService.alert({
-        //   icon: 'error',
-        //   title: '¡Error!',
-        //   text: err.error.Message,
-        // });
-      },
     });
-
-    // this.usuarioService.create(this.usuarioRequest()).subscribe({
-    //   next: () => {
-    //     this.alertService.alert({
-    //       icon: 'success',
-    //       title: '¡Éxito!',
-    //       text: 'Usuario creado correctamente',
-    //     });
-    //     this.limpiarFormulario();
-    //     this.closeModal('userModal');
-    //   },
-    //   error: (err) => {
-    //     // console.error('Error al crear usuario', err);
-    //     console.log(err);
-    //     // this.alertService.alert({
-    //     //   icon: 'error',
-    //     //   title: '¡Error!',
-    //     //   text: err.error.Message,
-    //     // });
-    //   },
-    // });
   }
 }

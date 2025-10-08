@@ -1,11 +1,13 @@
 import { inject, Injectable } from '@angular/core';
-import { of, throwError } from 'rxjs';
+import { catchError, Observable, of, throwError } from 'rxjs';
 import { FindRequest } from 'src/app/core/models/usuario/request/find-request';
 import { UsuarioRequest } from 'src/app/core/models/usuario/request/usuario-request';
 import { FindResponse } from 'src/app/core/models/usuario/response/find-response';
 import { UsuarioResponse } from 'src/app/core/models/usuario/response/usuario-response';
 
 import { UsuarioApiService } from 'src/app/core/services/usuario-api.service';
+import { BackendError, FrontendValidationError } from 'src/app/shared/interfaces/error';
+import { ErrorHandlerService } from 'src/app/shared/services/ErrorHandler.service';
 
 @Injectable({
   providedIn: 'root',
@@ -14,6 +16,7 @@ export class UsuariosService {
   constructor() {}
 
   usuarios = inject(UsuarioApiService);
+  errorHandler = inject(ErrorHandlerService);
 
   getUsuarioFind(request: FindRequest) {
     // if (!request.buscar || request.buscar.length < 3) {
@@ -49,19 +52,49 @@ export class UsuariosService {
     return this.usuarios.GetRol();
   }
 
-  getCreate(request: UsuarioRequest) {
+  create(request: UsuarioRequest): Observable<any> {
     try {
+      // Validación de frontend
       this.validateUsuarioRequest(request);
-      return this.usuarios.Create({
+
+      // Sanitizar datos
+      const sanitizedRequest = {
         ...request,
         usuarioCuenta: request.usuarioCuenta.trim(),
         usuarioNombre: request.usuarioNombre.trim(),
         contrasena: request.contrasena.trim(),
         contrasenaConfirmar: request.contrasenaConfirmar.trim(),
         rolId: Number(request.rolId),
-      });
+      };
+
+      // Llamar al backend
+      return this.usuarios.Create(sanitizedRequest).pipe(
+        catchError((httpError) => {
+          const backendError = new BackendError(
+            httpError.error?.Message || 'Error del servidor',
+            httpError.status,
+            httpError.error?.Message
+          );
+          console.log('Create', backendError);
+          // Manejar error con el servicio centralizado
+          this.errorHandler.handle(backendError);
+
+          return throwError(() => backendError);
+        })
+      );
     } catch (error) {
-      return throwError(() => error);
+      // Convertir a FrontendValidationError si no lo es
+      const frontendError =
+        error instanceof FrontendValidationError
+          ? error
+          : new FrontendValidationError(
+              error instanceof Error ? error.message : 'Error de validación'
+            );
+
+      // Manejar error con el servicio centralizado
+      this.errorHandler.handle(frontendError);
+
+      return throwError(() => frontendError);
     }
   }
 

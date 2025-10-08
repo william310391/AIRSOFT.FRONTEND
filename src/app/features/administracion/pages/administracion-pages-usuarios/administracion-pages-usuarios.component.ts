@@ -15,6 +15,7 @@ import { ContextMenuAction } from 'src/app/shared/interfaces/contextMenuAction';
 import { GetRolResponse } from 'src/app/core/models/usuario/response/getRol-response';
 import { UsuariosService } from '../../servicies/usuarios.service';
 import { UsuarioRequest } from 'src/app/core/models/usuario/request/usuario-request';
+import { AlertService } from 'src/app/shared/services/alert.service';
 
 @Component({
   selector: 'app-administracion-pages-usuarios',
@@ -30,6 +31,7 @@ export default class AdministracionPagesUsuariosComponent {
   modalService = inject(ModalService);
   contextMenu = inject(ContextMenuService);
   usuarioService = inject(UsuariosService);
+  alertService = inject(AlertService);
 
   rol = signal<GetRolResponse[]>([]);
   menuId = signal<string>('menu1');
@@ -131,16 +133,48 @@ export default class AdministracionPagesUsuariosComponent {
   }
 
   onclickCreate() {
-    // console.log(this.usuarioRequest());
-    //     // El UsuarioRequest computed ya tiene todos los valores actualizados
-    // this.usuarioService.getCreate(this.usuarioRequest()).subscribe({
+    // El UsuarioRequest computed ya tiene todos los valores actualizados
+
+    this.usuarioService.create(this.usuarioRequest()).subscribe({
+      next: () => {
+        this.alertService.alert({
+          icon: 'success',
+          title: '¡Éxito!',
+          text: 'Usuario creado correctamente',
+        });
+        this.limpiarFormulario();
+        this.closeModal('userModal');
+      },
+      error: () => {
+        // console.log('hay error');
+        // El error ya fue manejado en el servicio centralizado
+        // this.alertService.alert({
+        //   icon: 'error',
+        //   title: '¡Error!',
+        //   text: err.error.Message,
+        // });
+      },
+    });
+
+    // this.usuarioService.create(this.usuarioRequest()).subscribe({
     //   next: () => {
-    //     console.log('Usuario creado exitosamente');
+    //     this.alertService.alert({
+    //       icon: 'success',
+    //       title: '¡Éxito!',
+    //       text: 'Usuario creado correctamente',
+    //     });
     //     this.limpiarFormulario();
+    //     this.closeModal('userModal');
     //   },
     //   error: (err) => {
-    //     console.error('Error al crear usuario', err);
-    //   }
+    //     // console.error('Error al crear usuario', err);
+    //     console.log(err);
+    //     // this.alertService.alert({
+    //     //   icon: 'error',
+    //     //   title: '¡Error!',
+    //     //   text: err.error.Message,
+    //     // });
+    //   },
     // });
   }
 }

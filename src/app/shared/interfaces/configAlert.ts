@@ -4,6 +4,12 @@ export interface ConfigAlert {
   text?: string;
   timer?: number;
   showConfirmButton?: boolean;
+  showCancelButton: boolean;
+  confirmButtonColor: string;
+  cancelButtonColor: string;
+  confirmButtonText: string;
+  fnConfirm?: Function;
+  fnCancel?: Function;
   position?:
     | 'top'
     | 'top-start'

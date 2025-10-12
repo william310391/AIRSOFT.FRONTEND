@@ -14,6 +14,10 @@ export class AlertService {
     position: 'center',
     showConfirmButton: false,
     timer: 1500,
+    showCancelButton: true,
+    confirmButtonColor: '3085d6',
+    cancelButtonColor: 'd33',
+    confirmButtonText: 'Yes, delete it!',
   };
 
   alert(config: Partial<ConfigAlert>) {
@@ -26,6 +30,24 @@ export class AlertService {
       text: finalConfig.text,
       showConfirmButton: finalConfig.showConfirmButton,
       timer: finalConfig.timer,
+    });
+  }
+
+  confirm(config: Partial<ConfigAlert>) {
+    Swal.fire({
+      title: config.title || 'Are you sure?',
+      text: config.text || 'You wont be able to revert this!',
+      icon: config.icon || 'warning',
+      showCancelButton: config.showCancelButton || true,
+      confirmButtonColor: config.confirmButtonColor || '#3085d6',
+      cancelButtonColor: config.cancelButtonColor || '#d33',
+      confirmButtonText: config.confirmButtonText || 'Yes, delete it!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        config.fnConfirm?.();
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        config.fnCancel?.();
+      }
     });
   }
 }

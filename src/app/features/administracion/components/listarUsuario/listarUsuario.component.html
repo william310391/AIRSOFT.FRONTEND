@@ -5,9 +5,9 @@
         <th scope="col">#</th>
         <th scope="col">Usuario Cuenta</th>
         <th scope="col">Usuario Nombre</th>
-        <th scope="col">Usuario Estado</th>
         <th class="d-none d-md-table-cell" scope="col">Rol ID</th>
         <th class="d-none d-md-table-cell" scope="col">Rol</th>
+        <th scope="col">Usuario Estado</th>
       </tr>
     </thead>
     <tbody>
@@ -21,13 +21,17 @@
         <input type="hidden" [value]="item.usuarioCuenta" id="hd_usuarioCuenta" />
         <input type="hidden" [value]="item.usuarioNombre" id="hd_usuarioNombre" />
         <input type="hidden" [value]="item.rolID" id="hd_rolID" />
-        <input type="hidden" [value]="item.activo" id="hd_activo" />
+        <input type="hidden" [value]="item.estado" id="hd_activo" />
         <td>{{ item.usuarioID }}</td>
         <td>{{ item.usuarioCuenta }}</td>
         <td>{{ item.usuarioNombre }}</td>
-        <td>{{ item.activoDescripcion }}</td>
         <td class="d-none d-md-table-cell">{{ item.rolID }}</td>
         <td class="d-none d-md-table-cell">{{ item.rolNombre }}</td>
+        <td>
+          <span class="badge  {{ item.estado ? 'text-bg-primary' : 'text-bg-danger' }} ">{{
+            item.estadoDescripcion
+          }}</span>
+        </td>
       </tr>
       } }
 

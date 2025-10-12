@@ -2,6 +2,8 @@ import { inject, Injectable } from '@angular/core';
 import { catchError, Observable, of, throwError } from 'rxjs';
 import { FindRequest } from 'src/app/core/models/usuario/request/find-request';
 import { UsuarioRequest } from 'src/app/core/models/usuario/request/usuario-request';
+import { UsuarioChangeStateRequest } from 'src/app/core/models/usuario/request/usuarioChangeState-request';
+import { UsuarioDeleteRequest } from 'src/app/core/models/usuario/request/usuarioDelete-request';
 import { FindResponse } from 'src/app/core/models/usuario/response/find-response';
 import { UsuarioResponse } from 'src/app/core/models/usuario/response/usuario-response';
 
@@ -52,41 +54,35 @@ export class UsuariosService {
   getRol(): Observable<any> {
     return this.errorHandler.execute(() => this.usuarios.GetRol());
   }
-
-  create(request: UsuarioRequest): Observable<any> {
+  // #region peticiones API
+  ProcesarUsuario(request: UsuarioRequest, isCreate: boolean): Observable<any> {
     return this.errorHandler.executeWithValidation(
       request,
-      (data) => this.validateUsuarioRequest(data), //VALIDAS DATOS
+      (data) => this.validateUsuarioRequest(data, isCreate), //VALIDAS DATOS
       (data) => this.sanitizeRequest(data), // FORMATEAS DATOS
-      (sanitized) => this.usuarios.Create(sanitized) // EJECUTAS PETICION HTTP
+      (sanitized) => (isCreate ? this.usuarios.Create(sanitized) : this.usuarios.Update(sanitized)) // EJECUTAS PETICION HTTP
     );
   }
 
-  // create(request: UsuarioRequest): Observable<any> {
-  //   return this.executeWithValidation(request, (sanitized) => this.usuarios.Create(sanitized));
-  // }
+  DeleteUsuario(request: UsuarioDeleteRequest): Observable<any> {
+    return this.errorHandler.executeWithValidation(
+      request,
+      (data) => this.validarUsuarioDeleteRequest(data), //VALIDAS DATOS
+      (data) => this.sanitizeUsuarioDeleteRequest(data), // FORMATEAS DATOS
+      (sanitized) => this.usuarios.Delete(sanitized) // EJECUTAS PETICION HTTP
+    );
+  }
 
-  //validaciones
-  // private executeWithValidation(
-  //   request: UsuarioRequest,
-  //   apiCall: (sanitized: UsuarioRequest) => Observable<any>
-  // ): Observable<any> {
-  //   try {
-  //     // Validación de frontend
-  //     this.validateUsuarioRequest(request);
-
-  //     // Sanitizar datos
-  //     const sanitizedRequest = this.sanitizeRequest(request);
-
-  //     // Llamar al backend con manejo de errores
-  //     return apiCall(sanitizedRequest).pipe(
-  //       catchError((httpError) => this.errorHandler.handleHttpError(httpError))
-  //     );
-  //   } catch (error) {
-  //     return this.errorHandler.handleValidationError(error);
-  //   }
-  // }
-
+  ChangeState(request: UsuarioDeleteRequest): Observable<any> {
+    return this.errorHandler.executeWithValidation(
+      request,
+      (data) => this.validarUsuarioChangeStateRequest(data), //VALIDAS DATOS
+      (data) => this.sanitizeUsuarioChangeStateRequest(data), // FORMATEAS DATOS
+      (sanitized) => this.usuarios.ChangeState(sanitized) // EJECUTAS PETICION HTTP
+    );
+  }
+  // #endregion
+  // #region casteo de request
   private sanitizeRequest(request: UsuarioRequest): UsuarioRequest {
     return {
       ...request,
@@ -98,33 +94,38 @@ export class UsuariosService {
     };
   }
 
-  // private handleHttpError(httpError: any): Observable<never> {
-  //   const backendError = new BackendError(
-  //     httpError.error?.Message || 'Error del servidor',
-  //     httpError.status,
-  //     httpError.error?.Message
-  //   );
+  private sanitizeUsuarioDeleteRequest(request: UsuarioDeleteRequest): UsuarioDeleteRequest {
+    return {
+      ...request,
+      usuarioID: Number(request.usuarioID),
+    };
+  }
 
-  //   console.log('Backend Error:', backendError);
-  //   this.errorHandler.handle(backendError);
+  private sanitizeUsuarioChangeStateRequest(
+    request: UsuarioChangeStateRequest
+  ): UsuarioChangeStateRequest {
+    return {
+      ...request,
+      usuarioID: Number(request.usuarioID),
+    };
+  }
+  // #endregion
+  // #region Validacion
+  private validarUsuarioDeleteRequest(request: UsuarioDeleteRequest): void {
+    console.log(request);
+    if (!request.usuarioID || request.usuarioID <= 0) {
+      throw new FrontendValidationError('El usuarioID no es valido');
+    }
+  }
 
-  //   return throwError(() => backendError);
-  // }
+  private validarUsuarioChangeStateRequest(request: UsuarioChangeStateRequest): void {
+    console.log(request);
+    if (!request.usuarioID || request.usuarioID <= 0) {
+      throw new FrontendValidationError('El usuarioID no es valido');
+    }
+  }
 
-  // private handleValidationError(error: any): Observable<never> {
-  //   const frontendError =
-  //     error instanceof FrontendValidationError
-  //       ? error
-  //       : new FrontendValidationError(
-  //           error instanceof Error ? error.message : 'Error de validación'
-  //         );
-
-  //   this.errorHandler.handle(frontendError);
-
-  //   return throwError(() => frontendError);
-  // }
-
-  private validateUsuarioRequest(request: UsuarioRequest): void {
+  private validateUsuarioRequest(request: UsuarioRequest, isCreate: boolean): void {
     if (!request.usuarioCuenta?.trim()) {
       throw new FrontendValidationError('El usuario es requerido');
     }
@@ -133,11 +134,11 @@ export class UsuariosService {
       throw new FrontendValidationError('El nombre es requerido');
     }
 
-    if (!request.contrasena || request.contrasena.length < 8) {
+    if (isCreate && (!request.contrasena || request.contrasena.length < 8)) {
       throw new FrontendValidationError('La contraseña debe tener al menos 8 caracteres');
     }
 
-    if (request.contrasena !== request.contrasenaConfirmar) {
+    if (isCreate && request.contrasena !== request.contrasenaConfirmar) {
       throw new FrontendValidationError('Las contraseñas no coinciden');
     }
 
@@ -145,4 +146,5 @@ export class UsuariosService {
       throw new FrontendValidationError('Debe seleccionar un rol válido');
     }
   }
+  // #endregion
 }

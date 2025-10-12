@@ -3,7 +3,7 @@ export interface UsuarioResponse {
   rolID: number;
   usuarioCuenta: string;
   usuarioNombre: string;
-  activo: boolean;
-  activoDescripcion: string;
+  estado: boolean;
+  estadoDescripcion: string;
   rolNombre: string;
 }

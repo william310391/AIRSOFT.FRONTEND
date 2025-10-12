@@ -9,6 +9,8 @@ import { FindRequest } from '../models/usuario/request/find-request';
 import { UsuarioResponse } from '../models/usuario/response/usuario-response';
 import { FindResponse } from '../models/usuario/response/find-response';
 import { UsuarioRequest } from '../models/usuario/request/usuario-request';
+import { UsuarioDeleteRequest } from '../models/usuario/request/usuarioDelete-request';
+import { UsuarioChangeStateRequest } from '../models/usuario/request/usuarioChangeState-request';
 
 @Injectable({
   providedIn: 'root',
@@ -44,6 +46,24 @@ export class UsuarioApiService {
   Create(request: UsuarioRequest) {
     return this.http
       .post<ApiResponse<any>>(`${this.urlServicio}/create`, request)
+      .pipe(map((res) => (res.success ? res.data : null)));
+  }
+
+  Update(request: UsuarioRequest) {
+    return this.http
+      .post<ApiResponse<any>>(`${this.urlServicio}/update`, request)
+      .pipe(map((res) => (res.success ? res.data : null)));
+  }
+
+  Delete(request: UsuarioDeleteRequest) {
+    return this.http
+      .post<ApiResponse<any>>(`${this.urlServicio}/delete`, request)
+      .pipe(map((res) => (res.success ? res.data : null)));
+  }
+
+  ChangeState(request: UsuarioChangeStateRequest) {
+    return this.http
+      .post<ApiResponse<any>>(`${this.urlServicio}/changeState`, request)
       .pipe(map((res) => (res.success ? res.data : null)));
   }
 }

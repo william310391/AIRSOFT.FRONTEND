@@ -1,14 +1,12 @@
 import { inject, Injectable } from '@angular/core';
-import { catchError, Observable, of, throwError } from 'rxjs';
+import { Observable } from 'rxjs';
 import { FindRequest } from 'src/app/core/models/usuario/request/find-request';
 import { UsuarioRequest } from 'src/app/core/models/usuario/request/usuario-request';
 import { UsuarioChangeStateRequest } from 'src/app/core/models/usuario/request/usuarioChangeState-request';
 import { UsuarioDeleteRequest } from 'src/app/core/models/usuario/request/usuarioDelete-request';
-import { FindResponse } from 'src/app/core/models/usuario/response/find-response';
-import { UsuarioResponse } from 'src/app/core/models/usuario/response/usuario-response';
 
 import { UsuarioApiService } from 'src/app/core/services/usuario-api.service';
-import { BackendError, FrontendValidationError } from 'src/app/shared/interfaces/error';
+import { FrontendValidationError } from 'src/app/shared/interfaces/error';
 import { ErrorHandlerService } from 'src/app/shared/services/ErrorHandler.service';
 
 @Injectable({
@@ -20,41 +18,20 @@ export class UsuariosService {
   usuarios = inject(UsuarioApiService);
   errorHandler = inject(ErrorHandlerService);
 
-  getUsuarioFind(request: FindRequest) {
-    // if (!request.buscar || request.buscar.length < 3) {
-    //   return of({
-    //     datos: [],
-    //     pagina: 1,
-    //     tamanoPagina: 10,
-    //     totalRegistros: 0,
-    //     totalPaginas: 0,
-    //     tienePaginaAnterior: false,
-    //     tienePaginaSiguiente: false,
-    //   } as FindResponse<UsuarioResponse>);
-    // }
-
-    of({
-      datos: [],
-      pagina: 1,
-      tamanoPagina: 10,
-      totalRegistros: 0,
-      totalPaginas: 0,
-      tienePaginaAnterior: false,
-      tienePaginaSiguiente: false,
-    } as FindResponse<UsuarioResponse>);
-
-    // Defaults de paginación
-    request.pagina = request.pagina || 1;
-    request.tamanoPagina = request.tamanoPagina || 10;
-
-    //return this.usuarios.GetUsuarioFind(request);
-    return this.errorHandler.execute(() => this.usuarios.GetUsuarioFind(request));
-  }
-
+  // #region peticiones API
   getRol(): Observable<any> {
     return this.errorHandler.execute(() => this.usuarios.GetRol());
   }
-  // #region peticiones API
+
+  getUsuarioFind(request: FindRequest): Observable<any> {
+    return this.errorHandler.executeWithValidation(
+      request,
+      (data) => this.validargetUsuarioFindRequest(data), //VALIDAS DATOS
+      (data) => this.sanitizeFindRequest(data), // FORMATEAS DATOS
+      (sanitized) => this.usuarios.GetUsuarioFind(sanitized) // EJECUTAS PETICION HTTP
+    );
+  }
+
   ProcesarUsuario(request: UsuarioRequest, isCreate: boolean): Observable<any> {
     return this.errorHandler.executeWithValidation(
       request,
@@ -82,7 +59,17 @@ export class UsuariosService {
     );
   }
   // #endregion
+
   // #region casteo de request
+
+  private sanitizeFindRequest(request: FindRequest): FindRequest {
+    return {
+      ...request,
+      pagina: request.pagina || 1,
+      tamanoPagina: request.tamanoPagina || 10,
+    };
+  }
+
   private sanitizeRequest(request: UsuarioRequest): UsuarioRequest {
     return {
       ...request,
@@ -110,9 +97,13 @@ export class UsuariosService {
     };
   }
   // #endregion
+
   // #region Validacion
+  private validargetUsuarioFindRequest(request: FindRequest) {
+    //validacion Pendiente
+  }
+
   private validarUsuarioDeleteRequest(request: UsuarioDeleteRequest): void {
-    console.log(request);
     if (!request.usuarioID || request.usuarioID <= 0) {
       throw new FrontendValidationError('El usuarioID no es valido');
     }

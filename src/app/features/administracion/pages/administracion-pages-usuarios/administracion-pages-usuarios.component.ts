@@ -27,11 +27,11 @@ import { UsuarioChangeStateRequest } from 'src/app/core/models/usuario/request/u
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class AdministracionPagesUsuariosComponent {
+  @ViewChild(BuscarUsuariosComponent) buscarComponent!: BuscarUsuariosComponent;
+
   constructor() {
     this.loadData();
   }
-
-  @ViewChild(BuscarUsuariosComponent) buscarComponent!: BuscarUsuariosComponent;
 
   modalService = inject(ModalService);
   contextMenu = inject(ContextMenuService);

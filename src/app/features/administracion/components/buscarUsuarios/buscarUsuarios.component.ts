@@ -35,7 +35,6 @@ export class BuscarUsuariosComponent {
   buscarUsuarios() {
     this.sharedService.isLandingPage.set(true); //👈comienza la carga
     const request = this.cargarDatos();
-
     this.usuarioService.getUsuarioFind(request).subscribe({
       next: (res) => {
         if (res) {

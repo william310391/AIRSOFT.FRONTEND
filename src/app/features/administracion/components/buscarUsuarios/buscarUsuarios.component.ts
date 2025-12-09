@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, input, signal } from '@angular/core';
 import { ListarUsuarioComponent } from '../listarUsuario/listarUsuario.component';
 import { FindRequest } from 'src/app/core/models/usuario/request/find-request';
 import { UsuariosService } from '../../servicies/usuarios.service';
@@ -14,6 +14,7 @@ import { ModalService } from 'src/app/shared/services/modal.service';
   imports: [ListarUsuarioComponent, PaginacionComponent],
 })
 export class BuscarUsuariosComponent {
+  accionNuevo = input.required<() => void>();
   buscar = signal<string>('');
   usuarioService = inject(UsuariosService);
   sharedService = inject(LoadingService);

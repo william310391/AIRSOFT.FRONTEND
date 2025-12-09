@@ -11,6 +11,10 @@ export const COMPONENT_IMPORTS: Record<string, () => Promise<any>> = {
     import(
       '../../features/administracion/pages/administracion-pages-usuarios/administracion-pages-usuarios.component'
     ),
+  '/administracion/datos': () =>
+    import(
+      '../../features/administracion/pages/administracion-pages-datos/administracion-pages-datos'
+    ),
   '/reporte/usuarios_registrados': () =>
     import(
       '../../features/reportes/pages/reportes-pages-usuarios-registrados/reportes-pages-usuarios-registrados.component'

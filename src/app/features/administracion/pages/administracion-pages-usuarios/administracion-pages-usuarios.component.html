@@ -1,4 +1,6 @@
-<app-buscar-usuarios />
+<h1>Gestión Usuario</h1>
+<br />
+<app-buscar-usuarios [accionNuevo]="createUsuario" />
 
 <app-modal [modalId]="'userModal'" [size]="''">
   <span modal-title>{{ isCreate() ? 'Nuevo Usuario' : 'Actualizar Usuario' }}</span>

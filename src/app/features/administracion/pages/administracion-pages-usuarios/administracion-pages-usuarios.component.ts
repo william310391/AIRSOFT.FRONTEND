@@ -201,4 +201,10 @@ export default class AdministracionPagesUsuariosComponent {
       },
     });
   }
+
+  createUsuario = () => {
+    this.limpiarFormulario();
+    this.openModal('userModal');
+    this.isCreate.set(true);
+  };
 }

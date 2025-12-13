@@ -7,11 +7,12 @@ import { FindResponse } from 'src/app/core/models/usuario/response/find-response
 import { LoadingService } from 'src/app/shared/services/loading.service';
 import { PaginacionComponent } from '../../../../shared/components/paginacion/paginacion.component';
 import { ModalService } from 'src/app/shared/services/modal.service';
+import { Search } from 'src/app/shared/components/search/search.component';
 
 @Component({
   selector: 'app-buscar-usuarios',
   templateUrl: './buscarUsuarios.component.html',
-  imports: [ListarUsuarioComponent, PaginacionComponent],
+  imports: [ListarUsuarioComponent, PaginacionComponent, Search],
 })
 export class BuscarUsuariosComponent {
   accionNuevo = input.required<() => void>();
@@ -33,25 +34,58 @@ export class BuscarUsuariosComponent {
     tienePaginaSiguiente: false,
   });
 
-  buscarUsuarios() {
-    this.sharedService.isLandingPage.set(true); //👈comienza la carga
-    const request = this.cargarDatos();
+  // buscarUsuarios() {
+  //   this.sharedService.isLandingPage.set(true); //👈comienza la carga
+  //   const request = this.cargarDatos();
+  //   this.usuarioService.getUsuarioFind(request).subscribe({
+  //     next: (res) => {
+  //       if (res) {
+  //         // console.log(res);
+  //         this.currentPage.set(res.pagina);
+  //         this.totalPages.set(res.totalPaginas);
+  //         // Actualiza la señal con los nuevos datos
+  //         this.ListaUsuarios.set(res);
+  //       }
+  //       this.sharedService.isLandingPage.set(false); // 👈 termina la carga
+  //     },
+  //     error: () => {
+  //       this.sharedService.isLandingPage.set(false); // 👈 termina la carga incluso si hay error
+  //     },
+  //   });
+  // }
+
+  buscarUsuarios = (buscar: string) => {
+    this.sharedService.isLandingPage.set(true); // 👈 comienza la carga
+    this.buscar.set(buscar);
+    const request = {
+      buscar: buscar,
+      pagina: this.currentPage(),
+      tamanoPagina: this.pageSize,
+    };
+
     this.usuarioService.getUsuarioFind(request).subscribe({
       next: (res) => {
         if (res) {
-          // console.log(res);
           this.currentPage.set(res.pagina);
           this.totalPages.set(res.totalPaginas);
-          // Actualiza la señal con los nuevos datos
           this.ListaUsuarios.set(res);
         }
-        this.sharedService.isLandingPage.set(false); // 👈 termina la carga
+        this.sharedService.isLandingPage.set(false);
       },
       error: () => {
-        this.sharedService.isLandingPage.set(false); // 👈 termina la carga incluso si hay error
+        this.sharedService.isLandingPage.set(false);
       },
     });
+  };
+
+  onBuscar() {
+    this.buscarUsuarios(this.buscar());
   }
+
+  onNuevo = () => {
+    console.log('BuscarUsuariosComponent - accionNuevo llamado');
+    this.accionNuevo()();
+  };
 
   cargarDatos(): FindRequest {
     return {
@@ -64,26 +98,7 @@ export class BuscarUsuariosComponent {
   onPageChange(page: number) {
     if (page >= 1 && page <= this.totalPages()) {
       this.currentPage.set(page);
-      this.buscarUsuarios();
+      this.buscarUsuarios(this.buscar());
     }
   }
-
-  // private modalService = inject(ModalService);
-
-  // openModal(id: string) {
-  //   this.modalService.open(id);
-  // }
-
-  // closeModal(id: string) {
-  //   this.modalService.close(id);
-  // }
-  // showModal = signal(false);
-
-  // openModal() {
-  //   this.showModal.set(true);
-  // }
-
-  // closeModal() {
-  //   this.showModal.set(false);
-  // }
 }

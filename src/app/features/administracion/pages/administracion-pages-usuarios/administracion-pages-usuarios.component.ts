@@ -165,7 +165,7 @@ export default class AdministracionPagesUsuariosComponent {
 
         this.limpiarFormulario();
         this.closeModal('userModal');
-        this.buscarComponent.buscarUsuarios();
+        this.buscarComponent.onBuscar();
       },
     });
   }
@@ -183,7 +183,7 @@ export default class AdministracionPagesUsuariosComponent {
               title: '¡Éxito!',
               text: 'Usuario Eliminado',
             });
-            this.buscarComponent.buscarUsuarios();
+            this.buscarComponent.onBuscar();
           },
         });
       },
@@ -197,7 +197,7 @@ export default class AdministracionPagesUsuariosComponent {
           title: '¡Éxito!',
           text: 'Usuario Cambio de Estado',
         });
-        this.buscarComponent.buscarUsuarios();
+        this.buscarComponent.onBuscar();
       },
     });
   }

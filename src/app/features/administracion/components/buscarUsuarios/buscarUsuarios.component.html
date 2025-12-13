@@ -1,26 +1,7 @@
 <div class="card">
   <div class="card-header"><b>Buscar Usuarios</b></div>
   <div class="card-body">
-    <div class="row g-3 align-items-center">
-      <div class="col-12 col-sm-6 col-md-6">
-        <div class="input-group">
-          <input
-            type="text"
-            class="form-control"
-            placeholder="Usuario"
-            [value]="buscar()"
-            (input)="buscar.set(txtBuscar.value)"
-            #txtBuscar
-          />
-          <button class="btn btn-primary" type="button" (click)="buscarUsuarios()">
-            <i class="bi bi-search"></i> Buscar
-          </button>
-          <button class="btn btn-success" type="button" (click)="accionNuevo()()">
-            <i class="bi bi-file-earmark-plus"></i>
-          </button>
-        </div>
-      </div>
-    </div>
+    <app-search [accionBuscar]="buscarUsuarios" [accionNuevo]="onNuevo"></app-search>
 
     <div class="row align-items-center">
       <app-listar-usuario [datos]="ListaUsuarios()" />

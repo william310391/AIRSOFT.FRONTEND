@@ -1,2 +1,53 @@
 <h1>Gestión Datos</h1>
 <br />
+<app-buscar-datos [accionNuevo]="CrearDatos" />
+
+<app-modal [modalId]="modal()" [size]="''">
+  <span modal-title>{{ isCreate() ? 'Nuevo Dato' : 'Actualizar Dato' }}</span>
+  <div modal-body>
+    <form>
+      <div class="mb-3">
+        <label class="form-label">Tipo Dato</label>
+        <input
+          type="text"
+          class="form-control"
+          autocomplete="off"
+          [value]="tipodato()"
+          (input)="tipodato.set(txtTipoDato.value)"
+          #txtTipoDato
+        />
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Dato Nombre</label>
+        <input
+          type="text"
+          class="form-control"
+          autocomplete="off"
+          [value]="datoNombre()"
+          (input)="datoNombre.set(txtDatoNombre.value)"
+          #txtDatoNombre
+        />
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Dato Valor</label>
+        <textarea
+          class="form-control"
+          rows="5"
+          [value]="datoValor()"
+          (input)="datoValor.set(txtDatoValor.value)"
+          #txtDatoValor
+        ></textarea>
+      </div>
+    </form>
+  </div>
+  <div modal-footer>
+    <div class="d-grid gap-2 d-md-block d-md-flex">
+      <button class="btn btn-secondary" (click)="closeModal(modal())" autofocus>Cerrar</button>
+      <button class="btn btn-success" (click)="onclickGuardarCambios()">Guardar</button>
+    </div>
+  </div>
+</app-modal>
+
+<app-constext-menu [menuId]="menuId()" (actionSelected)="handleAction($event)" />

@@ -1,7 +1,8 @@
 export interface DatosReponse {
   tipoDato: string;
-  tipoDatoID: string;
-  dato: string;
+  datoID: number;
+  datoNombre: string;
+  datoValor: string;
   activo: boolean;
   activoDescripcion: string;
   usuarioRegistro: number;

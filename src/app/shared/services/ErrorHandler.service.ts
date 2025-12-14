@@ -63,12 +63,11 @@ export class ErrorHandlerService {
   }
 
   handleValidationError(error: any): Observable<never> {
+    console.log('Validation Error:', error);
     const frontendError =
       error instanceof FrontendValidationError
         ? error
-        : new FrontendValidationError(
-            error instanceof Error ? error.message : 'Error de validación'
-          );
+        : new FrontendValidationError(error ? error.message : 'Error de validación');
 
     this.handle(frontendError);
     return throwError(() => frontendError);
@@ -84,7 +83,7 @@ export class ErrorHandlerService {
   }
 
   private handleBackendError(error: BackendError): void {
-    //console.log('Error del backend:', error.message, 'Status:', error.statusCode, error);
+    console.log('Error del backend:', error.message, 'Status:', error.statusCode, error);
 
     const errorMessages: Record<number, { title: string; text: string }> = {
       400: {

@@ -1,0 +1,34 @@
+<div class="table-responsive">
+  <table class="table table-sm table-hover border-dark mt-4">
+    <thead class="table-light">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Tipo Dato</th>
+        <th scope="col">Dato Nombre</th>
+        <th scope="col">Estado</th>
+      </tr>
+    </thead>
+    <tbody>
+      @if(datos().datos.length === 0) {
+      <tr>
+        <td colspan="3" class="text-center">No hay datos disponibles</td>
+      </tr>
+      } @else { @for (item of datos().datos; track $index) {
+      <tr class="context-row">
+        <input type="hidden" [value]="item.datoID" id="hd_datoID" />
+        <input type="hidden" [value]="item.tipoDato" id="hd_tipoDato" />
+        <input type="hidden" [value]="item.datoNombre" id="hd_datoNombre" />
+        <input type="hidden" [value]="item.datoValor" id="hd_datoValor" />
+        <td>{{ item.datoID }}</td>
+        <td>{{ item.tipoDato }}</td>
+        <td>{{ item.datoNombre }}</td>
+        <td>
+          <span class="badge  {{ item.activo ? 'text-bg-primary' : 'text-bg-danger' }} ">{{
+            item.activoDescripcion
+          }}</span>
+        </td>
+      </tr>
+      } }
+    </tbody>
+  </table>
+</div>

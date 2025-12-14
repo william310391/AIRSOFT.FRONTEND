@@ -83,17 +83,16 @@ export class BuscarUsuariosComponent {
   }
 
   onNuevo = () => {
-    console.log('BuscarUsuariosComponent - accionNuevo llamado');
     this.accionNuevo()();
   };
 
-  cargarDatos(): FindRequest {
-    return {
-      buscar: this.buscar(),
-      pagina: this.currentPage(),
-      tamanoPagina: this.pageSize,
-    };
-  }
+  // cargarDatos(): FindRequest {
+  //   return {
+  //     buscar: this.buscar(),
+  //     pagina: this.currentPage(),
+  //     tamanoPagina: this.pageSize,
+  //   };
+  // }
 
   onPageChange(page: number) {
     if (page >= 1 && page <= this.totalPages()) {

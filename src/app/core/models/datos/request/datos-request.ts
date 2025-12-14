@@ -1,7 +1,7 @@
 export interface DatosRequest {
   tipoDato: string;
-  tipoDatoID: string;
-  dato: string;
-  activoDescripcion: string;
-  usuarioID: number;
+  datoID: number;
+  datoNombre: string;
+  datoValor: string;
+  activo: boolean;
 }

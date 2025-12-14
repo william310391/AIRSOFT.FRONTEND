@@ -13,7 +13,7 @@ export class AlertService {
     title: '',
     position: 'center',
     showConfirmButton: false,
-    timer: 1500,
+    timer: 2500,
     showCancelButton: true,
     confirmButtonColor: '3085d6',
     cancelButtonColor: 'd33',

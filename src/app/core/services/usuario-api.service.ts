@@ -1,9 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '@environments/environment.development';
-import { ObtenerAccesosRequest } from 'src/app/core/models/usuario/request/obtenerAccesos-request';
-import { ObtenerAccesosResponse } from 'src/app/core/models/usuario/response/obtenerAccesos-response';
-import { ApiResponse } from 'src/app/core/models/api-response';
 import { map } from 'rxjs';
 import { FindRequest } from '../models/usuario/request/find-request';
 import { UsuarioResponse } from '../models/usuario/response/usuario-response';
@@ -11,6 +8,9 @@ import { FindResponse } from '../models/usuario/response/find-response';
 import { UsuarioRequest } from '../models/usuario/request/usuario-request';
 import { UsuarioDeleteRequest } from '../models/usuario/request/usuarioDelete-request';
 import { UsuarioChangeStateRequest } from '../models/usuario/request/usuarioChangeState-request';
+import { ObtenerAccesosRequest } from '../models/usuario/request/obtenerAccesos-request';
+import { ObtenerAccesosResponse } from '../models/usuario/response/obtenerAccesos-response';
+import { ApiResponse } from '../models/api-response';
 
 @Injectable({
   providedIn: 'root',
@@ -24,16 +24,15 @@ export class UsuarioApiService {
     return this.http
       .post<ApiResponse<ObtenerAccesosResponse>>(`${this.urlServicio}/obtenerAccesos`, request)
       .pipe(
-        map((res) => (res.success ? res.data : null)) // ✅ devuelve ObtenerAccesosResponse
+        map((res) => (res.success ? res.data : null)), // ✅ devuelve ObtenerAccesosResponse
       );
   }
 
   GetUsuarioFind(request: FindRequest) {
     return this.http
-      .post<ApiResponse<FindResponse<UsuarioResponse>>>(
-        `${this.urlServicio}/getUsuarioFind`,
-        request
-      )
+      .post<
+        ApiResponse<FindResponse<UsuarioResponse>>
+      >(`${this.urlServicio}/getUsuarioFind`, request)
       .pipe(map((res) => (res.success ? res.data : null)));
   }
 

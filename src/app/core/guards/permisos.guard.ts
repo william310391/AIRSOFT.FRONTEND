@@ -1,6 +1,6 @@
 import { inject } from '@angular/core';
 import { Router, type CanActivateFn } from '@angular/router';
-import { AuthService } from 'src/app/features/auth/pages/services/auth.service';
+import { AuthService } from '@features/auth/pages/services/auth.service';
 import { JwtHelper } from '../utils/JwtHelper';
 
 export const permisosGuard: CanActivateFn = (route, state) => {

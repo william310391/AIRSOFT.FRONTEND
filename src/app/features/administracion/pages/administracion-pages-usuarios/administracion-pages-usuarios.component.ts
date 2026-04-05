@@ -8,20 +8,21 @@ import {
   ViewChild,
 } from '@angular/core';
 import { BuscarUsuariosComponent } from '../../components/buscarUsuarios/buscarUsuarios.component';
-import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
-import { ModalService } from 'src/app/shared/services/modal.service';
-import { ConstextMenuComponent } from 'src/app/shared/components/constextMenu/constextMenu.component';
-import { ContextMenuService } from 'src/app/shared/services/contextMenu.service';
-import { ContextMenuAction } from 'src/app/shared/interfaces/contextMenuAction';
-import { GetRolResponse } from 'src/app/core/models/usuario/response/getRol-response';
+import { ModalService } from '@shared/services/modal.service';
+import { ConstextMenuComponent } from '@shared/components/constextMenu/constextMenu.component';
+import { ContextMenuService } from '@shared/services/contextMenu.service';
+import { ContextMenuAction } from '@shared/interfaces/contextMenuAction';
+import { GetRolResponse } from '@core/models/usuario/response/getRol-response';
 import { UsuariosService } from '../../servicies/usuarios.service';
-import { UsuarioRequest } from 'src/app/core/models/usuario/request/usuario-request';
-import { AlertService } from 'src/app/shared/services/alert.service';
-import { UsuarioDeleteRequest } from 'src/app/core/models/usuario/request/usuarioDelete-request';
-import { UsuarioChangeStateRequest } from 'src/app/core/models/usuario/request/usuarioChangeState-request';
+import { UsuarioRequest } from '@core/models/usuario/request/usuario-request';
+import { AlertService } from '@shared/services/alert.service';
+import { UsuarioDeleteRequest } from '@core/models/usuario/request/usuarioDelete-request';
+import { UsuarioChangeStateRequest } from '@core/models/usuario/request/usuarioChangeState-request';
+import { ModalComponent } from '@shared/components/modal/modal.component';
 
 @Component({
   selector: 'app-administracion-pages-usuarios',
+  standalone: true,
   imports: [BuscarUsuariosComponent, ModalComponent, ConstextMenuComponent],
   templateUrl: './administracion-pages-usuarios.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

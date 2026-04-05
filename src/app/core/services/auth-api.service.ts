@@ -2,10 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '@environments/environment.development';
 import { tap } from 'rxjs';
-import { ApiResponse } from 'src/app/core/models/api-response';
-import { LoginRequest } from 'src/app/core/models/auth/request/login-request';
-import { LoginResponse } from 'src/app/core/models/auth/response/login-response';
-import { JwtHelper } from 'src/app/core/utils/JwtHelper';
+import { ApiResponse } from '@core/models/api-response';
+import { LoginRequest } from '@core/models/auth/request/login-request';
+import { LoginResponse } from '@core/models/auth/response/login-response';
+import { JwtHelper } from '@core/utils/JwtHelper';
 
 @Injectable({
   providedIn: 'root',
@@ -24,7 +24,7 @@ export class AuthApiService {
             JwtHelper.setToken(res.data.token);
             // console.log(JwtHelper.getClaimsAll());
           }
-        })
+        }),
       );
   }
 }

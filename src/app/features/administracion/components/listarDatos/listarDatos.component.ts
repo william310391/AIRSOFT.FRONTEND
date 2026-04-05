@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
-import { DatosReponse } from 'src/app/core/models/datos/response/datos-response';
-import { FindResponse } from 'src/app/core/models/usuario/response/find-response';
+import { DatosReponse } from '@core/models/datos/response/datos-response';
+import { FindResponse } from '@core/models/usuario/response/find-response';
 
 @Component({
   selector: 'app-listar-datos',

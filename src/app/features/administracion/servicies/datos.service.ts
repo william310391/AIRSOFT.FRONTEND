@@ -1,10 +1,10 @@
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { DatosRequest } from 'src/app/core/models/datos/request/datos-request';
-import { DatosChangeStateRequest } from 'src/app/core/models/datos/request/datosChangeState-request';
-import { FindRequest } from 'src/app/core/models/usuario/request/find-request';
-import { DatosApiService } from 'src/app/core/services/datos-api.service';
-import { ErrorHandlerService } from 'src/app/shared/services/ErrorHandler.service';
+import { DatosRequest } from '@core/models/datos/request/datos-request';
+import { DatosChangeStateRequest } from '@core/models/datos/request/datosChangeState-request';
+import { FindRequest } from '@core/models/usuario/request/find-request';
+import { DatosApiService } from '@core/services/datos-api.service';
+import { ErrorHandlerService } from '@shared/services/ErrorHandler.service';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +19,7 @@ export class DatosService {
       request,
       (data) => () => {}, //VALIDAS DATOS
       (data) => this.sanitizeFindRequest(data), // FORMATEAS DATOS
-      (data) => this.datosService.findBuscarDato(data) // EJECUTAS PETICION HTTP
+      (data) => this.datosService.findBuscarDato(data), // EJECUTAS PETICION HTTP
     );
   }
 
@@ -28,7 +28,7 @@ export class DatosService {
       request,
       (data) => this.validarChangeState(data), //VALIDAS DATOS
       (data) => data, // FORMATEAS DATOS
-      (data) => this.datosService.changeState(data) // EJECUTAS PETICION HTTP
+      (data) => this.datosService.changeState(data), // EJECUTAS PETICION HTTP
     );
   }
 
@@ -38,7 +38,7 @@ export class DatosService {
       request,
       (data) => this.validarProcesarDato(data, isCreate), //VALIDAS DATOS
       (data) => this.sanitizeProcesarDato(data), // FORMATEAS DATOS
-      (data) => (isCreate ? this.datosService.create(data) : this.datosService.udpate(request)) // EJECUTAS PETICION HTTP
+      (data) => (isCreate ? this.datosService.create(data) : this.datosService.udpate(request)), // EJECUTAS PETICION HTTP
     );
   }
 

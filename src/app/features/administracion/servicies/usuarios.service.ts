@@ -1,13 +1,13 @@
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { FindRequest } from 'src/app/core/models/usuario/request/find-request';
-import { UsuarioRequest } from 'src/app/core/models/usuario/request/usuario-request';
-import { UsuarioChangeStateRequest } from 'src/app/core/models/usuario/request/usuarioChangeState-request';
-import { UsuarioDeleteRequest } from 'src/app/core/models/usuario/request/usuarioDelete-request';
+import { FindRequest } from '@core/models/usuario/request/find-request';
+import { UsuarioRequest } from '@core/models/usuario/request/usuario-request';
+import { UsuarioChangeStateRequest } from '@core/models/usuario/request/usuarioChangeState-request';
+import { UsuarioDeleteRequest } from '@core/models/usuario/request/usuarioDelete-request';
 
-import { UsuarioApiService } from 'src/app/core/services/usuario-api.service';
-import { FrontendValidationError } from 'src/app/shared/interfaces/error';
-import { ErrorHandlerService } from 'src/app/shared/services/ErrorHandler.service';
+import { UsuarioApiService } from '@core/services/usuario-api.service';
+import { FrontendValidationError } from '@shared/interfaces/error';
+import { ErrorHandlerService } from '@shared/services/ErrorHandler.service';
 
 @Injectable({
   providedIn: 'root',
@@ -28,7 +28,7 @@ export class UsuariosService {
       request,
       (data) => this.validargetUsuarioFindRequest(data), //VALIDAS DATOS
       (data) => this.sanitizeFindRequest(data), // FORMATEAS DATOS
-      (sanitized) => this.usuarios.GetUsuarioFind(sanitized) // EJECUTAS PETICION HTTP
+      (sanitized) => this.usuarios.GetUsuarioFind(sanitized), // EJECUTAS PETICION HTTP
     );
   }
 
@@ -37,7 +37,7 @@ export class UsuariosService {
       request,
       (data) => this.validateUsuarioRequest(data, isCreate), //VALIDAS DATOS
       (data) => this.sanitizeRequest(data), // FORMATEAS DATOS
-      (sanitized) => (isCreate ? this.usuarios.Create(sanitized) : this.usuarios.Update(sanitized)) // EJECUTAS PETICION HTTP
+      (sanitized) => (isCreate ? this.usuarios.Create(sanitized) : this.usuarios.Update(sanitized)), // EJECUTAS PETICION HTTP
     );
   }
 
@@ -46,7 +46,7 @@ export class UsuariosService {
       request,
       (data) => this.validarUsuarioDeleteRequest(data), //VALIDAS DATOS
       (data) => this.sanitizeUsuarioDeleteRequest(data), // FORMATEAS DATOS
-      (sanitized) => this.usuarios.Delete(sanitized) // EJECUTAS PETICION HTTP
+      (sanitized) => this.usuarios.Delete(sanitized), // EJECUTAS PETICION HTTP
     );
   }
 
@@ -55,7 +55,7 @@ export class UsuariosService {
       request,
       (data) => this.validarUsuarioChangeStateRequest(data), //VALIDAS DATOS
       (data) => this.sanitizeUsuarioChangeStateRequest(data), // FORMATEAS DATOS
-      (sanitized) => this.usuarios.ChangeState(sanitized) // EJECUTAS PETICION HTTP
+      (sanitized) => this.usuarios.ChangeState(sanitized), // EJECUTAS PETICION HTTP
     );
   }
   // #endregion
@@ -89,7 +89,7 @@ export class UsuariosService {
   }
 
   private sanitizeUsuarioChangeStateRequest(
-    request: UsuarioChangeStateRequest
+    request: UsuarioChangeStateRequest,
   ): UsuarioChangeStateRequest {
     return {
       ...request,

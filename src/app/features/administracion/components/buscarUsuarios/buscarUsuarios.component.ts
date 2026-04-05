@@ -1,13 +1,13 @@
 import { Component, inject, input, signal } from '@angular/core';
 import { ListarUsuarioComponent } from '../listarUsuario/listarUsuario.component';
-import { FindRequest } from 'src/app/core/models/usuario/request/find-request';
+import { FindRequest } from '@core/models/usuario/request/find-request';
 import { UsuariosService } from '../../servicies/usuarios.service';
-import { UsuarioResponse } from 'src/app/core/models/usuario/response/usuario-response';
-import { FindResponse } from 'src/app/core/models/usuario/response/find-response';
-import { LoadingService } from 'src/app/shared/services/loading.service';
+import { UsuarioResponse } from '@core/models/usuario/response/usuario-response';
+import { FindResponse } from '@core/models/usuario/response/find-response';
+import { LoadingService } from '@shared/services/loading.service';
 import { PaginacionComponent } from '../../../../shared/components/paginacion/paginacion.component';
-import { ModalService } from 'src/app/shared/services/modal.service';
-import { Search } from 'src/app/shared/components/search/search.component';
+import { ModalService } from '@shared/services/modal.service';
+import { Search } from '@shared/components/search/search.component';
 
 @Component({
   selector: 'app-buscar-usuarios',

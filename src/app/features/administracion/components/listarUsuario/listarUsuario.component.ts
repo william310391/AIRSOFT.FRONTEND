@@ -1,7 +1,7 @@
 import { Component, inject, input, signal } from '@angular/core';
-import { FindResponse } from 'src/app/core/models/usuario/response/find-response';
-import { UsuarioResponse } from 'src/app/core/models/usuario/response/usuario-response';
-import { ModalService } from 'src/app/shared/services/modal.service';
+import { FindResponse } from '@core/models/usuario/response/find-response';
+import { UsuarioResponse } from '@core/models/usuario/response/usuario-response';
+import { ModalService } from '@shared/services/modal.service';
 
 @Component({
   selector: 'app-listar-usuario',

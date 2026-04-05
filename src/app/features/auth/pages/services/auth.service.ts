@@ -1,12 +1,12 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { tap } from 'rxjs';
-import { JwtClaims } from 'src/app/core/interfaces/JwtClaims.interface';
-import { ObtenerAccesosRequest } from 'src/app/core/models/usuario/request/obtenerAccesos-request';
-import { ObtenerAccesosResponse } from 'src/app/core/models/usuario/response/obtenerAccesos-response';
-import { buildRoutes } from 'src/app/core/router/buildRoutes';
-import { UsuarioApiService } from 'src/app/core/services/usuario-api.service';
-import { JwtHelper } from 'src/app/core/utils/JwtHelper';
+import { JwtClaims } from '@core/interfaces/JwtClaims.interface';
+import { ObtenerAccesosRequest } from '@core/models/usuario/request/obtenerAccesos-request';
+import { ObtenerAccesosResponse } from '@core/models/usuario/response/obtenerAccesos-response';
+import { buildRoutes } from '@core/router/buildRoutes';
+import { UsuarioApiService } from '@core/services/usuario-api.service';
+import { JwtHelper } from '@core/utils/JwtHelper';
 
 @Injectable({
   providedIn: 'root',
@@ -33,7 +33,7 @@ export class AuthService {
         const rutasBase = this.router.config.filter((r) => this.rutasExcluidas.includes(r.path!));
 
         this.router.resetConfig([...rutasBase, ...rutas]);
-      })
+      }),
     );
   }
 
@@ -60,7 +60,7 @@ export class AuthService {
     const encontrado = this.acceso()?.listaPagina.some((x) =>
       x.paginaUrlLink.startsWith('/')
         ? x.paginaUrlLink.slice(1)
-        : x.paginaUrlLink === rutaNormalizada
+        : x.paginaUrlLink === rutaNormalizada,
     );
     // console.log(ruta, !!encontrado, this.acceso()?.listaPagina);
     return !!encontrado;

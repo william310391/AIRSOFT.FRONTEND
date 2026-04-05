@@ -1,8 +1,8 @@
 import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HTTP_STATUS_CODES, HttpStatus } from '../constants/HTTP_STATUS_CODES';
-import { JwtHelper } from 'src/app/core/utils/JwtHelper';
-import { AuthService } from '../../auth/pages/services/auth.service';
+import { JwtHelper } from '@core/utils/JwtHelper';
+import { AuthService } from '@auth/pages/services/auth.service';
 
 @Injectable({
   providedIn: 'root',

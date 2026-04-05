@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component, inject, input, signal } from '@angular/core';
-import { LoadingService } from 'src/app/shared/services/loading.service';
+import { LoadingService } from '@shared/services/loading.service';
 import { DatosService } from '../../servicies/datos.service';
-import { FindResponse } from 'src/app/core/models/usuario/response/find-response';
-import { DatosReponse } from 'src/app/core/models/datos/response/datos-response';
-import { Search } from 'src/app/shared/components/search/search.component';
-import { PaginacionComponent } from 'src/app/shared/components/paginacion/paginacion.component';
+import { FindResponse } from '@core/models/usuario/response/find-response';
+import { DatosReponse } from '@core/models/datos/response/datos-response';
+import { Search } from '@shared/components/search/search.component';
+import { PaginacionComponent } from '@shared/components/paginacion/paginacion.component';
 import { ListarDatosComponent } from '../listarDatos/listarDatos.component';
 
 @Component({

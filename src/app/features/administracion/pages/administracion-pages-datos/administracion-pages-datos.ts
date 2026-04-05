@@ -1,14 +1,14 @@
 import { Component, computed, HostListener, inject, signal, ViewChild } from '@angular/core';
 import { DatosService } from '../../servicies/datos.service';
-import { LoadingService } from 'src/app/shared/services/loading.service';
+import { LoadingService } from '@shared/services/loading.service';
 import { BuscarDatos } from '../../components/buscarDatos/buscarDatos.component';
-import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
-import { ModalService } from 'src/app/shared/services/modal.service';
-import { AlertService } from 'src/app/shared/services/alert.service';
-import { ContextMenuAction } from 'src/app/shared/interfaces/contextMenuAction';
-import { ContextMenuService } from 'src/app/shared/services/contextMenu.service';
-import { ConstextMenuComponent } from 'src/app/shared/components/constextMenu/constextMenu.component';
-import { DatosChangeStateRequest } from 'src/app/core/models/datos/request/datosChangeState-request';
+import { ModalComponent } from '@shared/components/modal/modal.component';
+import { ModalService } from '@shared/services/modal.service';
+import { AlertService } from '@shared/services/alert.service';
+import { ContextMenuAction } from '@shared/interfaces/contextMenuAction';
+import { ContextMenuService } from '@shared/services/contextMenu.service';
+import { ConstextMenuComponent } from '@shared/components/constextMenu/constextMenu.component';
+import { DatosChangeStateRequest } from '@core/models/datos/request/datosChangeState-request';
 
 @Component({
   selector: 'app-administracion-pages-datos',

@@ -15,7 +15,7 @@ export class PaisApiServicio {
 
   GetPais() {
     return this.http
-      .get<ApiResponse<PaisResponse>>(`${this.urlServicio}/getPais`)
+      .get<ApiResponse<PaisResponse[]>>(`${this.urlServicio}/getPais`)
       .pipe(map((res) => (res.success ? res.data : null)));
   }
 }

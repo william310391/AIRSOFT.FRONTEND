@@ -38,7 +38,7 @@ export class DatosService {
       request,
       (data) => this.validarProcesarDato(data, isCreate), //VALIDAS DATOS
       (data) => this.sanitizeProcesarDato(data), // FORMATEAS DATOS
-      (data) => (isCreate ? this.datosService.create(data) : this.datosService.udpate(request)), // EJECUTAS PETICION HTTP
+      (data) => (isCreate ? this.datosService.create(data) : this.datosService.update(request)), // EJECUTAS PETICION HTTP
     );
   }
 

@@ -116,7 +116,7 @@ export default class AdministracionPagesDatos {
   }
 
   handleAction(event: { action: ContextMenuAction; data: any | null }) {
-    console.log('handleAction', event.data);
+    // console.log('handleAction', event.data);
     this.datoID.set(event.data?.datoID);
     this.tipodato.set(event.data?.tipoDato);
     this.datoValor.set(event.data?.datoValor);

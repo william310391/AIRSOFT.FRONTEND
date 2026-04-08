@@ -1,50 +1,37 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
-import { environment } from '@environments/environment.development';
+import { HttpParams } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { FindRequest } from '../models/usuario/request/find-request';
 import { FindResponse } from '../models/usuario/response/find-response';
-import { ApiResponse } from '../models/api-response';
 import { DatosReponse } from '../models/datos/response/datos-response';
-import { map } from 'rxjs';
 import { DatosRequest } from '../models/datos/request/datos-request';
 import { DatosChangeStateRequest } from '../models/datos/request/datosChangeState-request';
+import { BaseApiService } from './base-api.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class DatosApiService {
-  constructor() {}
-  http = inject(HttpClient);
-  urlServicio = `${environment.ApiUrlBase}/api/datos`;
+export class DatosApiService extends BaseApiService {
+  protected override urlService = 'api/datos';
+  constructor() {
+    super();
+  }
 
   findBuscarDato(request: FindRequest) {
-    return this.http
-      .post<ApiResponse<FindResponse<DatosReponse>>>(`${this.urlServicio}/findBuscarDato`, request)
-      .pipe(map((res) => (res.success ? res.data : null)));
+    return this.post<FindResponse<DatosReponse>, FindRequest>(`findBuscarDato`, request);
   }
-
   findByTipoDato(tipoDato: string) {
     const params = new HttpParams().set('tipoDato', tipoDato);
-
-    return this.http
-      .get<ApiResponse<DatosReponse[]>>(`${this.urlServicio}/findByTipoDato`, { params })
-      .pipe(map((res) => (res.success ? res.data : null)));
+    return this.get<DatosReponse[]>(`findByTipoDato`, { params });
   }
-
   create(request: DatosRequest) {
-    return this.http
-      .post<ApiResponse<DatosReponse>>(`${this.urlServicio}/create`, request)
-      .pipe(map((res) => (res.success ? res.data : false)));
+    return this.post<DatosReponse, DatosRequest>(`create`, request);
   }
 
-  udpate(request: DatosRequest) {
-    return this.http
-      .put<ApiResponse<DatosReponse>>(`${this.urlServicio}/update`, request)
-      .pipe(map((res) => (res.success ? res.data : false)));
+  update(request: DatosRequest) {
+    return this.put<DatosReponse, DatosRequest>(`update`, request);
   }
+
   changeState(request: DatosChangeStateRequest) {
-    return this.http
-      .put<ApiResponse<boolean>>(`${this.urlServicio}/changeState`, request)
-      .pipe(map((res) => (res.success ? res.data : false)));
+    return this.put<boolean, DatosChangeStateRequest>(`changeState`, request);
   }
 }

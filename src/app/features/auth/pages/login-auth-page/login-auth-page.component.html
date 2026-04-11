@@ -29,9 +29,10 @@
         />
       </div>
       <button type="submit" class="btn btn-primary w-100" (click)="login()" aria-expanded="false">
-        @if(isLoading()){
-        <span class="spinner-border spinner-border-sm me-2"></span>
-        } Ingresar
+        @if (isLoading()) {
+          <span class="spinner-border spinner-border-sm me-2"></span>
+        }
+        Ingresar
       </button>
 
       <div

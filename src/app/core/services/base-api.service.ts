@@ -1,8 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '@environments/environment.development';
 import { ApiResponse } from '../models/api-response';
-import { map, catchError, Observable, of } from 'rxjs';
+import { map, catchError, Observable, of, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -16,9 +16,16 @@ export abstract class BaseApiService {
   }
 
   protected handleError<T>() {
-    return (error: any): Observable<T | null> => {
-      console.error('API error:', error);
-      return of(null);
+    return (error: unknown) => {
+      let message = 'Error inesperado';
+
+      if (error instanceof HttpErrorResponse) {
+        message = error.error?.message || error.error?.Message || `Error ${error.status}`;
+      }
+
+      console.error('API error:', message);
+
+      return throwError(() => new Error(message));
     };
   }
 

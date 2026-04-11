@@ -4,6 +4,7 @@ import { LoginRequest } from '@core/models/auth/request/login-request';
 import { AuthApiService } from '@core/services/auth-api.service';
 import { AuthService } from '../services/auth.service';
 import { buildRoutes } from '@core/router/buildRoutes';
+import { catchError, finalize, of, switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-login-auth-page',
@@ -25,31 +26,43 @@ export default class LoginAuthPageComponent {
     this.isLoading.set(true);
     this.isError.set(false);
     this.messageError.set('');
-    var datos = this.cargarDatos();
-    this.apiServicio.login(datos).subscribe({
-      next: (res) => {
-        this.authServicio
-          .ObtenerPermisos({
-            usuarioID: res.data?.usuarioId ?? 0,
-          })
-          .subscribe((res) => {
-            // 1. Guardar los permisos en el servicio
-            this.authServicio.setPermisos(this.authServicio.acceso());
-            // 2. Construir rutas dinámicas
-            const rutas = buildRoutes(this.authServicio.acceso()?.listaPagina ?? []);
-            // 3. Inyectar las rutas en el Router
-            this.router.resetConfig(rutas);
-            // 4. Navegar a la página principal o dashboard
-            this.router.navigate(['/prueba']);
+
+    const datos = this.cargarDatos();
+
+    this.apiServicio
+      .login(datos)
+      .pipe(
+        switchMap((res) => {
+          if (!res) {
+            throw new Error('Error en la autenticación');
+          }
+          return this.authServicio.ObtenerPermisos({
+            usuarioID: res.usuarioId ?? 0,
           });
-      },
-      error: (err) => {
-        this.isError.set(true);
-        this.messageError.set(err.error.Message);
-        // console.error('Error en login', err, err.error.Message);
-      },
-    });
-    this.isLoading.set(false);
+        }),
+        tap((resPermisos) => {
+          // 1. Guardar permisos
+          this.authServicio.setPermisos(this.authServicio.acceso());
+
+          // 2. Construir rutas
+          const rutas = buildRoutes(this.authServicio.acceso()?.listaPagina ?? []);
+
+          // 3. Resetear rutas
+          this.router.resetConfig(rutas);
+
+          // 4. Navegar
+          this.router.navigate(['/prueba']);
+        }),
+        catchError((err) => {
+          this.isError.set(true);
+          this.messageError.set(err?.error?.Message || err.message || 'Error inesperado');
+          return of(null);
+        }),
+        finalize(() => {
+          this.isLoading.set(false);
+        }),
+      )
+      .subscribe();
   }
 
   cargarDatos(): LoginRequest {

@@ -1,30 +1,25 @@
-import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
-import { environment } from '@environments/environment.development';
-import { tap } from 'rxjs';
-import { ApiResponse } from '@core/models/api-response';
+import { Injectable } from '@angular/core';
+import { map, tap } from 'rxjs';
 import { LoginRequest } from '@core/models/auth/request/login-request';
 import { LoginResponse } from '@core/models/auth/response/login-response';
 import { JwtHelper } from '@core/utils/JwtHelper';
+import { BaseApiService } from './base-api.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AuthApiService {
-  constructor() {}
-  http = inject(HttpClient);
-  urlServicio = `${environment.ApiUrlBase}/api/Auth`;
+export class AuthApiService extends BaseApiService {
+  protected override urlService = 'api/Auth';
 
   login(loginRequest: LoginRequest) {
-    return this.http
-      .post<ApiResponse<LoginResponse>>(`${this.urlServicio}/login`, loginRequest)
-      .pipe(
-        tap((res) => {
-          if (res.success && res.data?.token) {
-            JwtHelper.setToken(res.data.token);
-            // console.log(JwtHelper.getClaimsAll());
-          }
-        }),
-      );
+    return this.post<LoginResponse, LoginRequest>('login', loginRequest).pipe(
+      map((data) => {
+        // Agrega este log para verificar la respuesta
+        if (!data) throw new Error('Login failed');
+
+        JwtHelper.setToken(data.token);
+        return data;
+      }),
+    );
   }
 }

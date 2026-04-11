@@ -5,35 +5,27 @@ import { map } from 'rxjs';
 import { ApiResponse } from '../models/api-response';
 import { PersonaTelefonoResponse } from '../models/personaTelefono/response/PersonaTelefono-Response';
 import { PersonaTelefonoRequest } from '../models/personaTelefono/request/PersonaTelefono-Request';
+import { BaseApiService } from './base-api.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class PersonaTelefonoApiService {
-  constructor() {}
-  http = inject(HttpClient);
-  urlServicio = `${environment.ApiUrlBase}/api/PersonaTelefono`;
+export class PersonaTelefonoApiService extends BaseApiService {
+  protected override urlService = 'api/PersonaTelefono';
+  constructor() {
+    super();
+  }
 
   GetPersonaTelefonos(personaID: number) {
-    return this.http
-      .get<ApiResponse<PersonaTelefonoResponse[]>>(`${this.urlServicio}/${personaID}`)
-      .pipe(map((res) => (res ? res : null)));
+    return this.get<PersonaTelefonoResponse[]>(`GetPersonaTelefonos/${personaID}`);
   }
-
   Save(request: PersonaTelefonoRequest) {
-    return this.http
-      .post<ApiResponse<boolean>>(`${this.urlServicio}/save`, request)
-      .pipe(map((res) => (res.success ? res.data : null)));
+    return this.post<boolean, PersonaTelefonoRequest>(`save`, request);
   }
   Update(request: PersonaTelefonoRequest) {
-    return this.http
-      .put<ApiResponse<boolean>>(`${this.urlServicio}/update`, request)
-      .pipe(map((res) => (res.success ? res.data : null)));
+    return this.put<boolean, PersonaTelefonoRequest>(`update`, request);
   }
-
   ChangeState(request: PersonaTelefonoRequest) {
-    return this.http
-      .put<ApiResponse<boolean>>(`${this.urlServicio}/changeState/`, request)
-      .pipe(map((res) => (res.success ? res.data : null)));
+    return this.put<boolean, PersonaTelefonoRequest>(`changeState`, request);
   }
 }

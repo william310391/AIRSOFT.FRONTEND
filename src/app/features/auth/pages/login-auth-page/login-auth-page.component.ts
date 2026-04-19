@@ -8,6 +8,7 @@ import { catchError, finalize, of, switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-login-auth-page',
+  styleUrls: ['./login-auth-page.component.css'],
   templateUrl: './login-auth-page.component.html',
 })
 export default class LoginAuthPageComponent {
